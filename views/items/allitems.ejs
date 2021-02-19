@@ -1,0 +1,47 @@
+<%- include("../partials/header.ejs") %>
+<div class="error"><%= errormessage %></div>
+<table>
+    <tr>
+        <th>
+            ID
+        </th>
+        
+        <th>
+            Name
+        </th>
+        
+        <th>
+            Price
+        </th>
+        
+        <th>
+            Quantity
+        </th>
+        <th>
+            Actions
+        </th>
+    </tr>
+
+    <% items.forEach(function(item){ %>
+        <tr>
+            <td><%=item.id %></td>
+            <td><%=item.name %></td>
+            <td><%=item.price %></td>
+            <td><%=item.quantity %></td>
+            <td>
+                <form action="/items/delete.html" method="POST">
+                    <input type="hidden" value="<%= item.id %>" name="id" />
+                    <input type="submit" value="delete" />
+                </form>
+            </td>
+        </tr>
+
+    <% }) %>
+</table>
+<form action="/items/add.html" method="POST" >
+    Name<input type="text" name="name" /><br/>
+    Price<input type="number" name="price" /><br/>
+    Quantity<input type="number" name="quantity" /><br/>
+    <input type="submit" value="add" />
+</form>
+<%- include("../partials/footer.ejs") %>
