@@ -46,6 +46,13 @@ function checkFileType(file, cb) {
 }
 
 exports.controler = {
+    allproducts:function (req, res) {
+        if(productArray.length == 0){
+            res.send({message:"empty"});
+        }else{
+            res.send(productArray);
+        }
+    },
     allproductsView: function (req, res) {
         console.log(req.session);
         res.render("products/productList.ejs", {
@@ -112,68 +119,79 @@ exports.controler = {
 
     },
     add: (req, res) => {
-        upload(req, res, (error) => {
-            if (error) {
-                res.render('adminindex', {
-                    msg: `Error: ${error.message}`,
-                    err: true
-                });
-            } else {
-                if (req.file == undefined) {
-                    res.render('adminindex', {
-                        msg: 'Error: No File Selected',
-                        err: 1
+        if (req.session.is_Admin === 'true') {
+            upload(req, res, (error) => {
+                if (error) {
+                    res.render('adminProductControl', {
+                        msg: `Error: ${error.message}`,
+                        login: req.session.name ? 'ok' : 'no',
+                        items:[],
+                        err: true
                     });
                 } else {
-                    if (config.controler.mode == 'devolopment') {
-                        console.log(req.file);
-                        console.log(req.body);
-                    }
-                    var newqq = {};
-                    var id;
-                    if (productArray.length == 0) {
-                        id = 1;
+                    if (req.file == undefined) {
+                        res.render('adminProductControl', {
+                            msg: 'Error: No File Selected',
+                            login: req.session.name ? 'ok' : 'no',
+                            items:[],
+                            err: 1
+                        });
                     } else {
-                        id = Number(productArray[productArray.length - 1].productID) + 1;
+                        if (config.controler.mode == 'devolopment') {
+                            console.log(req.file);
+                            console.log(req.body);
+                        }
+                        var newqq = {};
+                        var id;
+                        if (productArray.length == 0) {
+                            id = 1;
+                        } else {
+                            id = Number(productArray[productArray.length - 1].productID) + 1;
+                        }
+                        if (config.controler.mode == 'devolopment') {
+                            console.log('hi -> ' + req.file.filename);
+                        }
+                        Object.assign(newqq, {
+                            productID: `${id}`
+                        }, req.body, {
+                            productImage: `${req.file.filename}`
+                        });
+
+                        // Object.assign(newqq, {
+                        //     productImage: `${req.file.filename}`
+                        // });
+
+                        productArray.push(newqq);
+                        saveProductArrayToFile();
+
+                        if (config.controler.mode == 'devolopment') {
+                            console.log(productArray.length)
+                        }
+                        let obj = {}
+                        Object.assign(obj, {
+                            page: 1,
+                            imgprepage: productArray.length,
+                            data: productArray
+                        })
+
+                        if (config.controler.mode == 'devolopment') {
+                            console.log(obj.data[7])
+                        }
+
+                        res.render('adminProductControl', {
+                            msg: 'File Uploaded',
+                            login: req.session.name ? 'ok' : 'no',
+                            err: 0,
+                            items:productArray,
+                            file: `upload/${req.file.originalname}`
+                        });
                     }
-                    if (config.controler.mode == 'devolopment') {
-                        console.log('hi -> ' + req.file.filename);
-                    }
-                    Object.assign(newqq, {
-                        productID: `${id}`
-                    }, req.body, {
-                        productImage: `${req.file.filename}`
-                    });
-
-                    // Object.assign(newqq, {
-                    //     productImage: `${req.file.filename}`
-                    // });
-
-                    productArray.push(newqq);
-                    saveProductArrayToFile();
-
-                    if (config.controler.mode == 'devolopment') {
-                        console.log(productArray.length)
-                    }
-                    let obj = {}
-                    Object.assign(obj, {
-                        page: 1,
-                        imgprepage: productArray.length,
-                        data: productArray
-                    })
-
-                    if (config.controler.mode == 'devolopment') {
-                        console.log(obj.data[7])
-                    }
-
-                    res.render('adminindex', {
-                        msg: 'File Uploaded',
-                        err: 0,
-                        file: `upload/${req.file.originalname}`
-                    });
                 }
-            }
-        });
+            });
+        }else{
+            res.send('<script> location.href = "/home.html" </script>');
+        }
+
     },
     delete: (req, res) => {
         var productIndex = productArray.findIndex((item) => item.productID == req.params.id);
@@ -204,11 +222,11 @@ exports.controler = {
             });
         }
     },
-    productitem:(req,res) => {
+    productitem: (req, res) => {
         var productIndex = productArray.findIndex((item) => item.productID == req.params.id);
         res.render("products/product.ejs", {
             item: productArray[productIndex],
-            login: req.session.name?'ok':'no',
+            login: req.session.name ? 'ok' : 'no',
             errormessage: ""
         })
     }
