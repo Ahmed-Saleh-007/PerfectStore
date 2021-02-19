@@ -56,7 +56,7 @@ exports.controler = {
 
                     Object.assign(newqq, {
                         userID: `${id}`
-                    }, req.body,{isadmin:`${isAdmin}`});
+                    }, req.body,{userImage:""},{isadmin:`${isAdmin}`});
                     users.push(newqq);
                     saveUsersArrayToFile();
                    
@@ -101,7 +101,11 @@ exports.controler = {
 
             var sessiondId = `${users[userIndex].userID}${users[userIndex].name}`;
             req.session.name = sessiondId;
+            req.session.userID = `${users[userIndex].userID}`
+            req.session.is_Admin = `${users[userIndex].isadmin}`
             console.log("sessiondId = " + sessiondId)
+            console.log(' req.session.userID -> '+ req.session.userID);
+            console.log(' req.session.is_Admin -> '+ req.session.is_Admin);
             if (req.session.sessiondId) {
                 req.session.sessiondId++;
 
