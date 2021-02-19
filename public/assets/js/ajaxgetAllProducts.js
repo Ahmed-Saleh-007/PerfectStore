@@ -34,7 +34,7 @@ function showRecipes(products){
                                 <i class="far fa-star low-star"></i>
                                 <i class="far fa-star low-star"></i>
                             </div>
-                            <h4><a href="#">${item.productName}</a></h4>
+                            <h4><a href="/products/productDetails.html/${item.productID}" id="${item.productID}" class='details'>${item.productName}</a></h4>
                             <div class="price">
                                 <ul>
                                     <li>$${item.productPrice}</li>
@@ -47,5 +47,33 @@ function showRecipes(products){
             `
         });
         document.getElementById('data').innerHTML = data;
-        //getClasses();
+        getClasses();
+}
+
+
+function getClasses(){
+    let btnClasses = document.getElementsByClassName('details');
+    for(let i = 0;i<btnClasses.length ;i++){
+        btnClasses[i].addEventListener('click',function(e){
+            console.log(e.target.id);
+           
+        })
+    }
+}
+
+getProductDetails(1);
+async function getProductDetails(id){
+    let res = await fetch("/products/productList.html/1");
+    let resJson = await res.json();
+    let data = resJson.data;
+    if(data.productId == id){
+        console.log(data);
+    }
+    
+    // if(data.length > 0){
+    //     showRecipes(data);
+    //     //console.log("data is"+data);
+    // }else{
+    //     console.log("No Data To Display");
+    // }
 }
