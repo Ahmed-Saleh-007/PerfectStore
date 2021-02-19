@@ -109,6 +109,7 @@ app.post("/login.html", bodyParser, auth.controler.login)
 app.post("/register.html", bodyParser, auth.controler.register)
 
 
+
 app.get("/products/productList.html", products.controler.allproductsView)
 app.get("/products/productList.html/:id", products.controler.productsViewByPage)
 app.post("/products/add.html", bodyParser, products.controler.add)
