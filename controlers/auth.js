@@ -2,6 +2,7 @@ var fs = require("fs");
 var validation = require("./validation");
 var isFoundBefore = false;
 var isMatch = true;
+var errorFlag = false;
 //------------------------
 
 // var cookieParser = require('cookie-parser');
@@ -32,10 +33,12 @@ exports.controler = {
             if (userIndex >= 0) {
                 console.log("This email registered before, please try with another email");
                 isFoundBefore = true;
+                errorFlag = true;
             } else {
                 if ((req.body.password) != (req.body.password_confirmation)) {
                     console.log('Password Does not match, please try again');
                     isMatch = false;
+                    errorFlag = true;
                 } else {
                     console.log('ok');
                     var newqq = {};
@@ -58,7 +61,9 @@ exports.controler = {
 
             }
         } else {
-
+            errorFlag = true;
+        }
+        if(errorFlag){
             console.log('validName ' + validName)
             console.log('validEmail ' + validEmail)
             console.log('validPassword ' + validPassword)
@@ -69,13 +74,13 @@ exports.controler = {
             validEmail ? errors['emailErrorMessage'] = "" : errors['emailErrorMessage'] = '* Email is not valid';
             validPassword ? errors['passwordErrorMessage'] = "" : errors['passwordErrorMessage'] = "* Password must be more than 8 digits";
             validPasswordConfirmation ? errors['passwordConfirmationErrorMessage'] = "" : errors['passwordConfirmationErrorMessage'] = "* Password Confirmation must be more than 8 digits";
-
+            isFoundBefore ? errors['generalErrorMessage'] = '* This email registered before, please try with another email' : errors['generalErrorMessage'] = "";
+            // isMatch ?  errors['generalErrorMessage'] ="" : errors['generalErrorMessage'] = '* Password Does not match, please try again';
+            res.render("auth/register.ejs", {
+                ...errors
+            })
         }
-        isFoundBefore ? errors['generalErrorMessage'] = '* This email registered before, please try with another email' : errors['generalErrorMessage'] = "";
-        // isMatch ?  errors['generalErrorMessage'] ="" : errors['generalErrorMessage'] = '* Password Does not match, please try again';
-        res.render("auth/register.ejs", {
-            ...errors
-        })
+        
 
 
     },

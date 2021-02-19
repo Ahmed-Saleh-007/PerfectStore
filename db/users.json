@@ -1,1 +1,1 @@
-[{"userID":"1","name":"mohammed","email":"m@mail.com","password":"123456789","password_confirmation":"123456789"},{"userID":"2","name":"Mahmoud","email":"m@m.com","password":"12345678","password_confirmation":"12345678"}]
+[{"userID":"1","name":"mohammed","email":"m@mail.com","password":"123456789","password_confirmation":"123456789"},{"userID":"2","name":"Mahmoud","email":"m@m.com","password":"12345678","password_confirmation":"12345678"},{"userID":"3","name":"mohammed Egila","email":"m@egila.com","password":"123456789","password_confirmation":"123456789"}]
