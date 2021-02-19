@@ -49,10 +49,9 @@ exports.controler = {
     allproductsView: function (req, res) {
         console.log(req.session);
         res.render("products/productList.ejs", {
-            items: productArray,
-            reload:false,
-           login: req.session.name?'ok':'no',
-            errormessage: ""
+            msg: '',
+            err: -1,
+            login: req.session.name ? 'ok' : 'no'
         })
     },
     productsViewByPage: (req, res) => {
