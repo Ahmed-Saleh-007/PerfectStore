@@ -17,6 +17,7 @@ bodyParser = bodyParser.urlencoded({
 
 var home = require("./controlers/home");
 var admin = require("./controlers/admin");
+var user = require("./controlers/user");
 var config = require("./controlers/config");
 var auth = require("./controlers/auth");
 // var items = require("./controlers/items");
@@ -89,6 +90,7 @@ app.use(session({secret: "Shh, its a secret!"}));
 app.use(express.static('./public/upload'));
 // app.use(express.static('./upload'));
 app.use(express.static('./public'));
+app.use('/users/assets', express.static(__dirname + '/public/assets'));
 app.use('/home/assets', express.static(__dirname + '/public/assets'));
 app.use('/admin/assets', express.static(__dirname + '/public/assets'));
 app.use('/products/assets', express.static(__dirname + '/public/assets'));
@@ -120,6 +122,11 @@ app.get("/products/productDetails.html/:pram", products.controler.productitem)
 
 app.get("/admin/addproduct.html", admin.controler.addproduct)
 app.get("/admin/home.html", admin.controler.adminView)
+
+
+app.get("/users/user.html", user.controler.viwe)
+app.post("/users/edituser.html", bodyParser, user.controler.edit)
+app.delete("/users/deleteuser.html/:id", bodyParser, user.controler.delete)
 
 
 

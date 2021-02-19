@@ -1,0 +1,53 @@
+<!doctype html>
+
+<%- include("../partials/header.ejs") %>
+    <main>
+        <section class="profile pt-70 pb-70" style="background-color: #fbfbfb;">
+            <div class="container">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="card-title mb-0"><i class="fas fa-user"></i> Edit Information</h5>
+                    </div>
+                    <div class="card-body py-4">
+                        <form action="" method="POST">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="avatar-upload">
+                                        <div class="avatar-edit">
+                                            <input type="file" id="imageUpload" name="image">
+                                            <label for="imageUpload">
+                                                <i class="fa fa-pencil-alt"></i>
+                                            </label>
+                                        </div>
+                                        <div class="avatar-preview">
+                                            <div id="imagePreview" style="background-image: url(assets/img/hero/avatar5.png);"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-8 pt-4">
+                                    <div class="form-group">
+                                        <label for="name">Name</label>
+                                        <input class="form-control" required="required" name="name" type="text" id="name" value= <%= userName %>>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="email">Email</label>
+                                        <input class="form-control" required="required" name="email" type="email" id="email" value= <%= userEmail %>>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="password">Password</label>
+                                        <input class="form-control" required="required" name="password" type="password" id="password" value= <%= pass %>>
+                                    </div>
+                                    <input class="btn btn-primary profile-submit" type="submit" value="Edit">
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+    <%- include("../partials/footer.ejs") %>
+        
+    </body>
+</html>
