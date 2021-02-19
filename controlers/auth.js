@@ -1,4 +1,5 @@
 var fs = require("fs");
+const { config } = require("process");
 var validation = require("./validation");
 var isFoundBefore = false;
 var isMatch = true;
@@ -26,6 +27,7 @@ exports.controler = {
 
         var validName = validation.controler.username(req.body.name);
         var validEmail = validation.controler.email(req.body.email);
+        var isAdmin = validation.controler.admin(req.body.email);
         var validPassword = validation.controler.password(req.body.password);
         var validPasswordConfirmation = validation.controler.password(req.body.password_confirmation);
         if (validName && validEmail && validPassword && validPasswordConfirmation) {
@@ -40,7 +42,10 @@ exports.controler = {
                     isMatch = false;
                     errorFlag = true;
                 } else {
+                    
                     console.log('ok');
+                    console.log('isAdmin -> ' + isAdmin);
+                    
                     var newqq = {};
                     var id;
                     if (users.length == 0) {
@@ -51,10 +56,13 @@ exports.controler = {
 
                     Object.assign(newqq, {
                         userID: `${id}`
-                    }, req.body);
+                    }, req.body,{isadmin:`${isAdmin}`});
                     users.push(newqq);
                     saveUsersArrayToFile();
-                    res.send("<script>location.href= '/login.html'</script>")
+                   
+                        res.send("<script>location.href= '/login.html'</script>")
+                   
+                   
 
 
                 }
@@ -101,7 +109,12 @@ exports.controler = {
                 req.session.sessiondId = 1;
 
             }
-             res.send("<script>location.href= 'products/productList.html'</script>")
+            if(`${users[userIndex].isadmin}`){
+                res.send("<script>location.href= 'admin/home.html'</script>")
+            }else{
+                res.send("<script>location.href= 'products/productList.html'</script>")
+            }
+            
             // res.render("products/productList.ejs", {
             //     login: "ok",
             //     reload: true
