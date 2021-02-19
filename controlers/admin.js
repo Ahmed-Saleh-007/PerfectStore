@@ -11,5 +11,11 @@ exports.controler = {
             err:-1
         })
 
+    },
+    adminProductControl: function (req,res) {
+        res.render("../views/adminProductControl.ejs",{
+            err:-1
+        })
+
     }
 }

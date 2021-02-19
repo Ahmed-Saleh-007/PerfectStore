@@ -121,6 +121,9 @@ app.get("/products/productDetails.html/:pram", products.controler.productitem)
 app.get("/admin/addproduct.html", admin.controler.addproduct)
 app.get("/admin/home.html", admin.controler.adminView)
 
+//added by ahmed
+app.get("/admin/productControl.html", admin.controler.adminProductControl)
+
 
 
 

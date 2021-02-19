@@ -1,15 +1,1 @@
-[{
-    "userID": "1",
-    "name": "mohammed",
-    "email": "m@mail.com",
-    "password": "123456789",
-    "password_confirmation": "123456789",
-    "isadmin": "false"
-}, {
-    "userID": "2",
-    "name": "egila",
-    "email": "egila@admin.com",
-    "password": "123456789",
-    "password_confirmation": "123456789",
-    "isadmin": "true"
-}]
+[{"userID":"1","name":"mohammed","email":"m@mail.com","password":"123456789","password_confirmation":"123456789","isadmin":"false"},{"userID":"2","name":"egila","email":"egila@admin.com","password":"123456789","password_confirmation":"123456789","isadmin":"true"},{"userID":"3","name":"ahmed","email":"ahmed@outlook.com","password":"123456789","password_confirmation":"123456789","isadmin":"false"}]
