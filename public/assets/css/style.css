@@ -1497,3 +1497,16 @@
   padding: 22px 35px;
   margin-bottom: 10px;
 }
+
+/*admin pages*/
+
+
+/*admin product*/
+
+.admin-product .nice-select {
+  width: 100%;
+}
+
+.admin-product .nice-select .list {
+  width: 100%;
+}
