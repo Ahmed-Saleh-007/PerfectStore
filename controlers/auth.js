@@ -109,7 +109,7 @@ exports.controler = {
                 req.session.sessiondId = 1;
 
             }
-            if(`${users[userIndex].isadmin}`){
+            if(`${users[userIndex].isadmin}` === 'true'){
                 res.send("<script>location.href= 'admin/home.html'</script>")
             }else{
                 res.send("<script>location.href= 'products/productList.html'</script>")
