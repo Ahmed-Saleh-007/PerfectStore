@@ -1,7 +1,7 @@
 
 exports.controler = {
     addproduct: function (req,res) {
-        res.render("../views/adminindex.ejs",{
+        res.render("../views/adminProductControl.ejs",{
             err:-1,
             login: req.session.name?'ok':'no'
         })
@@ -9,7 +9,7 @@ exports.controler = {
     },
     adminView: function (req,res) {
         if(req.session.is_Admin === 'true'){
-            res.render("../views/adminindex.ejs",{
+            res.render("../views/adminProductControl.ejs",{
                 err:-1,
                 login: req.session.name?'ok':'no'
             })
