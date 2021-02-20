@@ -28,7 +28,7 @@
                           </div>
                           <div class="col-md-7 p-5">
                             <h3><%=item.name%></h3>
-                            <p class="mb-2 text-muted text-uppercase small">Shirts</p>
+                            <p class="mb-2 text-muted text-uppercase small"><%=item.category%></p>
                             <div class="product-caption">
                                 <div class="product-ratting">
                                     <i class="far fa-star"></i>
@@ -64,13 +64,10 @@
 
     </main>
     <%- include("../partials/footer.ejs") %>
-    <!-- Jquery Plugins, main Jquery -->	
-    <script src="./assets/js/plugins.js"></script>
-    <script src="./assets/js/main.js"></script>
         <script>
             $(document).ready(function(){
-			$('#ex1').zoom();
-		});
+                $('#ex1').zoom();
+            });
         </script>
         
     </body>

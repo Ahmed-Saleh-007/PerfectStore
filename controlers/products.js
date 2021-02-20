@@ -2,13 +2,14 @@ var fs = require("fs");
 const multer = require('multer');
 const path = require('path');
 var config = require("../controlers/config");
+var helpFunction = require("../controlers/help");
 
 
 //set storge engine
 const storge = multer.diskStorage({
     destination: './public/upload',
     filename: function (req, file, cb) {
-        cb(null, `${productArray.length == 0 ? 1 :Number(productArray[productArray.length - 1].productID) + 1}-${req.body.productName}-${Date.now()}-${file.originalname}`);
+        cb(null, `${productArray.length == 0 ? 1 :Number(productArray[productArray.length - 1].productID) + 1}-${req.body.name}-${Date.now()}-${file.originalname}`);
     }
 });
 
@@ -19,31 +20,34 @@ const upload = multer({
         fileSize: 1000000
     },
     fileFilter: function (req, file, cb) {
-        checkFileType(file, cb);
+        // checkFileType(file, cb);
+        helpFunction.controler.checkFileType(file, cb);
     }
 }).single("image");
 
 
-//check File Type
-function checkFileType(file, cb) {
-    //allowed exteion
-    const fileTypes = /jpeg|jpg|png|gif/;
 
-    //check extetion
-    const extName = fileTypes.test(path.extname(file.originalname).toLowerCase());
+// //check File Type
+// function checkFileType(file, cb) {
+//     //allowed exteion
+//     const fileTypes = /jpeg|jpg|png|gif/;
 
-    //check mime
-    const mimeType = fileTypes.test(file.mimetype);
+//     //check extetion
+//     const extName = fileTypes.test(path.extname(file.originalname).toLowerCase());
 
-    if (mimeType && extName) {
-        return cb(null, true);
-    } else {
-        cb({
-            message: 'Images Only'
-        });
-    }
+//     //check mime
+//     const mimeType = fileTypes.test(file.mimetype);
 
-}
+//     if (mimeType && extName) {
+//         return cb(null, true);
+//     } else {
+//         cb({
+//             message: 'Images Only'
+//         });
+//     }
+
+// }
+
 
 exports.controler = {
     allproducts:function (req, res) {

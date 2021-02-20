@@ -2,6 +2,27 @@ var fs = require("fs");
 const multer = require('multer');
 const path = require('path');
 var config = require("../controlers/config");
+var helpFunction = require("../controlers/help");
+
+//set storge engine
+const storge = multer.diskStorage({
+    destination: './public/upload',
+    filename: function (req, file, cb) {
+        cb(null, `${users.length == 0 ? 1 :Number(users[users.length - 1].userID) + 1}-${req.body.name}-${Date.now()}-${file.originalname}`);
+    }
+});
+
+//init upload 
+const upload = multer({
+    storage: storge,
+    limits: {
+        fileSize: 1000000
+    },
+    fileFilter: function (req, file, cb) {
+        // checkFileType(file, cb);
+        helpFunction.controler.checkFileType(file, cb);
+    }
+}).single("image");
 
 
 exports.controler = {
@@ -60,7 +81,79 @@ exports.controler = {
             });
         }
     },
-    edit: function (req,res) {
+    edit: (req, res) => {
+        if (req.session.is_Admin === 'true') {
+            upload(req, res, (error) => {
+                if (error) {
+                    res.render('adminProductControl', {
+                        msg: `Error: ${error.message}`,
+                        login: req.session.name ? 'ok' : 'no',
+                        items:[],
+                        err: true
+                    });
+                } else {
+                    if (req.file == undefined) {
+                        res.render('adminProductControl', {
+                            msg: 'Error: No File Selected',
+                            login: req.session.name ? 'ok' : 'no',
+                            items:[],
+                            err: 1
+                        });
+                    } else {
+                        if (config.controler.mode == 'devolopment') {
+                            console.log(req.file);
+                            console.log(req.body);
+                        }
+                        var newqq = {};
+                        var id;
+                        if (productArray.length == 0) {
+                            id = 1;
+                        } else {
+                            id = Number(productArray[productArray.length - 1].productID) + 1;
+                        }
+                        if (config.controler.mode == 'devolopment') {
+                            console.log('hi -> ' + req.file.filename);
+                        }
+                        Object.assign(newqq, {
+                            productID: `${id}`
+                        }, req.body, {
+                            productImage: `${req.file.filename}`
+                        });
+
+                        // Object.assign(newqq, {
+                        //     productImage: `${req.file.filename}`
+                        // });
+
+                        productArray.push(newqq);
+                        saveProductArrayToFile();
+
+                        if (config.controler.mode == 'devolopment') {
+                            console.log(productArray.length)
+                        }
+                        let obj = {}
+                        Object.assign(obj, {
+                            page: 1,
+                            imgprepage: productArray.length,
+                            data: productArray
+                        })
+
+                        if (config.controler.mode == 'devolopment') {
+                            console.log(obj.data[7])
+                        }
+
+                        res.render('adminProductControl', {
+                            msg: 'File Uploaded',
+                            login: req.session.name ? 'ok' : 'no',
+                            err: 0,
+                            items:productArray,
+                            file: `upload/${req.file.originalname}`
+                        });
+                    }
+                }
+            });
+        }else{
+            res.send('<script> location.href = "/home.html" </script>');
+        }
 
     }
 }
