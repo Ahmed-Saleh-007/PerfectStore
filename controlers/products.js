@@ -2,6 +2,7 @@ var fs = require("fs");
 const multer = require('multer');
 const path = require('path');
 var config = require("../controlers/config");
+var helpFunction = require("../controlers/help");
 
 
 //set storge engine
@@ -19,31 +20,34 @@ const upload = multer({
         fileSize: 1000000
     },
     fileFilter: function (req, file, cb) {
-        checkFileType(file, cb);
+        // checkFileType(file, cb);
+        helpFunction.controler.checkFileType(file, cb);
     }
 }).single("image");
 
 
-//check File Type
-function checkFileType(file, cb) {
-    //allowed exteion
-    const fileTypes = /jpeg|jpg|png|gif/;
 
-    //check extetion
-    const extName = fileTypes.test(path.extname(file.originalname).toLowerCase());
+// //check File Type
+// function checkFileType(file, cb) {
+//     //allowed exteion
+//     const fileTypes = /jpeg|jpg|png|gif/;
 
-    //check mime
-    const mimeType = fileTypes.test(file.mimetype);
+//     //check extetion
+//     const extName = fileTypes.test(path.extname(file.originalname).toLowerCase());
 
-    if (mimeType && extName) {
-        return cb(null, true);
-    } else {
-        cb({
-            message: 'Images Only'
-        });
-    }
+//     //check mime
+//     const mimeType = fileTypes.test(file.mimetype);
 
-}
+//     if (mimeType && extName) {
+//         return cb(null, true);
+//     } else {
+//         cb({
+//             message: 'Images Only'
+//         });
+//     }
+
+// }
+
 
 exports.controler = {
     allproducts:function (req, res) {
