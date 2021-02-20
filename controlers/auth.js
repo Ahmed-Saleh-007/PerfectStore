@@ -56,7 +56,7 @@ exports.controler = {
 
                     Object.assign(newqq, {
                         userID: `${id}`
-                    }, req.body,{userImage:""},{isadmin:`${isAdmin}`});
+                    }, req.body,{isadmin:`${isAdmin}`},{imagename:""});
                     users.push(newqq);
                     saveUsersArrayToFile();
                    
@@ -114,7 +114,7 @@ exports.controler = {
 
             }
             if(`${users[userIndex].isadmin}` === 'true'){
-                res.send("<script>location.href= 'admin/home.html'</script>")
+                res.send("<script>location.href= '/admin/showproduct.html'</script>")
             }else{
                 res.send("<script>location.href= 'products/productList.html'</script>")
             }

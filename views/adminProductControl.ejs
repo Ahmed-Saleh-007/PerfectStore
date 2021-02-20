@@ -76,7 +76,8 @@
                                 </tr>
                             </thead>
                             <tbody>
-
+                              
+                                        
                                 <% items.forEach(function(item){ %>
                                     <tr>
                                         <td><%=item.productID %></td>
@@ -86,13 +87,13 @@
                                         <td><%=item.quantity %></td>
                                         <td>
                                             <form action="/items/delete.html" method="POST">
-                                                <input type="hidden" value="<%= item.id %>" name="id" />
-                                                <input type="submit" value="delete" />
+                                                <input type="hidden"  name="id" />
+                                                <input type="submit" id="<%= item.productID %>" value="delete" />
                                             </form>
                                         </td>
                                     </tr>
-                            
-                                <% }) %>
+                                   
+                              <%})%>
 
 
                             </tbody>
