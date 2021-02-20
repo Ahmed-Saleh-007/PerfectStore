@@ -34,10 +34,10 @@ function showRecipes(products){
                                 <i class="far fa-star low-star"></i>
                                 <i class="far fa-star low-star"></i>
                             </div>
-                            <h4><a href="/products/productDetails.html/${item.productID}" id="${item.productID}" class='details'>${item.productName}</a></h4>
+                            <h4><a href="/products/productDetails.html/${item.productID}" id="${item.productID}" class='details'>${item.name}</a></h4>
                             <div class="price">
                                 <ul>
-                                    <li>$${item.productPrice}</li>
+                                    <li>$${item.price}</li>
                                 </ul>
                             </div>
                         </div>

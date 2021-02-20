@@ -1,9 +1,1 @@
-[{
-    "productID": "1",
-    "name": "aaaa",
-    "category": "women",
-    "price": "120",
-    "quantity": "12",
-    "description": "abcd",
-    "productImage": "1-undefined-1613777546594-category_1.png"
-}]
+[{"productID":"1","name":"aaaa","category":"women","price":"120","quantity":"12","description":"abcd","productImage":"1-undefined-1613777546594-category_1.png"},{"productID":"2","name":"Watch","category":"man","price":"100","quantity":"5","description":"A New Styled Watch","productImage":"2-undefined-1613779531221-2 (2).jpg"}]
