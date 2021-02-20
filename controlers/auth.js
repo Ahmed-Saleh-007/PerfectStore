@@ -60,7 +60,7 @@ exports.controler = {
                     users.push(newqq);
                     saveUsersArrayToFile();
                    
-                        res.send("<script>location.href= '/login.html'</script>")
+                    res.send("<script>location.href= '/login.html'</script>")
                    
                    
 
@@ -84,6 +84,7 @@ exports.controler = {
             validPasswordConfirmation ? errors['passwordConfirmationErrorMessage'] = "" : errors['passwordConfirmationErrorMessage'] = "* Password Confirmation must be more than 8 digits";
             isFoundBefore ? errors['generalErrorMessage'] = '* This email registered before, please try with another email' : errors['generalErrorMessage'] = "";
             // isMatch ?  errors['generalErrorMessage'] ="" : errors['generalErrorMessage'] = '* Password Does not match, please try again';
+            errorFlag = false;
             res.render("auth/register.ejs", {
                 ...errors
             })
@@ -103,8 +104,9 @@ exports.controler = {
             req.session.name = sessiondId;
             req.session.userID = `${users[userIndex].userID}`
             req.session.is_Admin = `${users[userIndex].isadmin}`
-            console.log("sessiondId = " + sessiondId)
             console.log(' req.session.userID -> '+ req.session.userID);
+            console.log(req.session)
+           
             console.log(' req.session.is_Admin -> '+ req.session.is_Admin);
             if (req.session.sessiondId) {
                 req.session.sessiondId++;

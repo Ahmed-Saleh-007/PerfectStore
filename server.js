@@ -6,6 +6,10 @@ const path = require('path');
 
 var cookieParser = require('cookie-parser');
 var session = require('express-session');
+// var MongoStore = require('connect-mongostore')(express);
+// const redis = require('redis');
+// const redisStore = require('connect-redis')(session);
+// const client  = redis.createClient();
 //-----------------------------------------------
 
 
@@ -83,7 +87,8 @@ app.set('view engine', 'ejs');
 
 //-----------------------------------------------
 app.use(cookieParser());
-app.use(session({secret: "Shh, its a secret!"}));
+// app.use(session({secret: "Shh, its a secret!"}));
+app.use(session({ secret: 'keyboard cat', cookie: { maxAge: 60000,expires:new Date(Date.now() + 60000) }}))
 //-----------------------------------------------
 
 // public folder
