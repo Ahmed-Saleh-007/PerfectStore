@@ -1,1 +1,9 @@
-[]
+[{
+    "productID": "1",
+    "name": "u",
+    "category": "man",
+    "price": "120",
+    "quantity": "12",
+    "description": "abcd",
+    "productImage": "1-u-1613813112135-category_9.png"
+}]

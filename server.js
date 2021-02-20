@@ -88,6 +88,7 @@ app.use(session({secret: "Shh, its a secret!"}));
 
 // public folder
 app.use(express.static('./public/upload'));
+app.use(express.static('./public/upload/usersImges'));
 // app.use(express.static('./upload'));
 app.use(express.static('./public'));
 app.use('/users/assets', express.static(__dirname + '/public/assets'));
@@ -95,6 +96,10 @@ app.use('/home/assets', express.static(__dirname + '/public/assets'));
 app.use('/admin/assets', express.static(__dirname + '/public/assets'));
 app.use('/products/assets', express.static(__dirname + '/public/assets'));
 app.use('/products/productDetails.html/assets', express.static(__dirname + '/public/assets'));
+app.use('/users/edituser.html/assets', express.static(__dirname + '/public/assets'));
+app.use('/users/edituser.html/', express.static('./public/upload/usersImges'));
+app.use('/users', express.static('./public/upload/usersImges'));
+
 app.use('/products/productDetails.html', express.static('./public/upload'));
 app.use('/assets', express.static(__dirname + '/public/assets'));
 app.use('/upload', express.static(__dirname + '/public'));
@@ -124,6 +129,7 @@ app.get("/products/productDetails.html/:id", products.controler.productitem)
 
 
 app.get("/admin/addproduct.html", admin.controler.addproduct)
+app.get("/admin/showproduct.html", products.controler.allproducts)
 app.get("/admin/home.html", admin.controler.adminView)
 
 //added by ahmed
@@ -131,7 +137,7 @@ app.get("/admin/productControl.html", admin.controler.adminProductControl)
 
 
 app.get("/users/user.html", user.controler.viwe)
-app.post("/users/edituser.html", bodyParser, user.controler.edit)
+app.post("/users/edituser.html/:id", bodyParser, user.controler.edit)
 app.delete("/users/deleteuser.html/:id", bodyParser, user.controler.delete)
 
 

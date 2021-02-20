@@ -52,9 +52,21 @@ const upload = multer({
 exports.controler = {
     allproducts:function (req, res) {
         if(productArray.length == 0){
-            res.send({message:"empty"});
+            res.render('adminProductControl', {
+                msg: 'File Uploaded',
+                login: req.session.name ? 'ok' : 'no',
+                err: 0,
+                items:[]
+               
+            });
         }else{
-            res.send(productArray);
+            res.render('adminProductControl', {
+                msg: 'File Uploaded',
+                login: req.session.name ? 'ok' : 'no',
+                err: 0,
+                items:productArray
+                
+            });
         }
     },
     allproductsView: function (req, res) {

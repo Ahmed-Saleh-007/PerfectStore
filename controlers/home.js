@@ -1,3 +1,4 @@
+var sess;
 exports.controler = {
     logout: function (req, res) {
 
@@ -15,7 +16,8 @@ exports.controler = {
     },
     homeView: function (req, res) {
 
-
+console.log(req
+    )
 
 
         res.render("../views/index.ejs", {
