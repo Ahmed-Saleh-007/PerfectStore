@@ -1,129 +1,134 @@
 <!doctype html>
 <%- include("./partials/header.ejs") %>
 
-    <main>
-        <%if (err == 0) { %>
-            <div class="alert alert-success" role="alert">
-                <%= typeof msg != 'undefined' ? msg : '' %>
-            </div>
-            <% }if (err == 1) { %>
-    
-            <div class="alert alert-danger" role="alert">
-                <%= typeof msg != 'undefined' ? msg : '' %>
-            </div>
-            <% } %>
-        <section class="profile admin-product pt-40" style="background-color: #fbfbfb;">
-            <div class="container">
-                <div class="card">
-                    <div class="card-header">
-                        <h5 class="card-title mb-0"><i class="fas fa-tag"></i> Product Information</h5>
-                    </div>
-                    <div class="card-body py-4">
-                        <form action="/products/add.html" method="POST" enctype="multipart/form-data">
-                            <div class="row">
-                                <div class="form-group col-md-6">
-                                    <label for="name">Name</label>
-                                    <input class="form-control" required="required" name="name" type="text" id="name">
-                                </div>
-                                <div class="form-group col-md-6">
-                                    <label for="category">category</label>
-                                    <select required="required" name="category" id="category" name="category">
-                                        <option value="">.....</option>
-                                        <option value="man">man</option>
-                                        <option value="women">women</option>
-                                        <option value="children">children</option>
-                                    </select>
-                                </div>
-                                <div class="form-group col-md-6">
-                                    <label for="price">price</label>
-                                    <input class="form-control" required="required" name="price" type="text" id="price">
-                                </div>
-                                <div class="form-group col-md-6">
-                                    <label for="quantity">quantity</label>
-                                    <input class="form-control" name="quantity" type="text" id="quantity">
-                                </div>
-                                <div class="form-group col-md-6">
-                                    <label for="product-image">image</label>
-                                    <input class="form-control" name="image" type="file" id="product-image" style="padding: 3px;">
-                                </div>
-                                <div class="form-group col-md-6">
-                                    <label for="description">description</label>
-                                    <input class="form-control" name="description" type="text" id="description">
-                                </div>
+<main>
+    <%if (err == 0) { %>
+    <div class="alert alert-success" role="alert">
+        <%= typeof msg != 'undefined' ? msg : '' %>
+    </div>
+    <% }if (err == 1) { %>
+
+    <div class="alert alert-danger" role="alert">
+        <%= typeof msg != 'undefined' ? msg : '' %>
+    </div>
+    <% } %>
+    <section class="profile admin-product pt-40" style="background-color: #fbfbfb;">
+        <div class="container">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title mb-0"><i class="fas fa-tag"></i> Product Information</h5>
+                </div>
+                <div class="card-body py-4">
+                    <form action="/products/add.html" method="POST" enctype="multipart/form-data">
+                        <div class="row">
+                            <div class="form-group col-md-6">
+                                <label for="name">Name</label>
+                                <input class="form-control" required="required" name="name" type="text" id="name">
                             </div>
-                            <input class=" form-comtrol btn btn-primary profile-submit" type="submit" value="Add">
-                        </form>
-                    </div>
+                            <div class="form-group col-md-6">
+                                <label for="category">category</label>
+                                <select required="required" name="category" id="category" name="category">
+                                    <option value="">.....</option>
+                                    <option value="man">man</option>
+                                    <option value="women">women</option>
+                                    <option value="children">children</option>
+                                </select>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="price">price</label>
+                                <input class="form-control" required="required" name="price" type="text" id="price">
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="quantity">quantity</label>
+                                <input class="form-control" name="quantity" type="text" id="quantity">
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="product-image">image</label>
+                                <input class="form-control" name="image" type="file" id="product-image"
+                                    style="padding: 3px;">
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="description">description</label>
+                                <input class="form-control" name="description" type="text" id="description">
+                            </div>
+                        </div>
+                        <input class=" form-comtrol btn btn-primary profile-submit" type="submit" value="Add">
+                    </form>
                 </div>
             </div>
-        </section>
-        <section class="profile admin-product pt-40 pb-40" style="background-color: #fbfbfb;">
-            <div class="container">
-                <div class="card">
-                    <div class="card-header">
-                        <h5 class="card-title mb-0"><i class="fas fa-tags"></i> Product List</h5>
-                    </div>
-                    <div class="card-body py-4">
-                        <table id="example1" class="table table-bordered table-striped">
-                            <thead>
-                                <tr>
-                                    <th>Id</th>
-                                    <th>Name</th>
-                                    <th>Category</th>
-                                    <th>Price</th>
-                                    <th>Quantity</th>
-                                    <th>Controls</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                              
-                                        
-                                <% items.forEach(function(item){ %>
-                                    <tr>
-                                        <td><%=item.productID %></td>
-                                        <td><%=item.name %></td>
-                                        <td><%=item.category %></td>
-                                        <td><%=item.price %></td>
-                                        <td><%=item.quantity %></td>
-                                        <td>
-                                            <form action="/items/delete.html" method="POST">
-                                                <input type="hidden"  name="id" />
-                                                <input type="submit" id="<%= item.productID %>" value="delete" />
-                                            </form>
-                                        </td>
-                                    </tr>
-<<<<<<< HEAD
-                            
-                                <% }) %>
-=======
-                                   
-                              <%})%>
+        </div>
+    </section>
+    <section class="profile admin-product pt-40 pb-40" style="background-color: #fbfbfb;">
+        <div class="container">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title mb-0"><i class="fas fa-tags"></i> Product List</h5>
+                </div>
+                <div class="card-body py-4">
+                    <table id="example1" class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th>Id</th>
+                                <th>Name</th>
+                                <th>Category</th>
+                                <th>Price</th>
+                                <th>Quantity</th>
+                                <th>Controls</th>
+                            </tr>
+                        </thead>
+                        <tbody>
 
 
->>>>>>> 8fe584e2837c63ad4f05ab48cf1201822239ff73
-                            </tbody>
-                            <tfoot>
-                                <tr>
-                                    <th>Id</th>
-                                    <th>Name</th>
-                                    <th>Category</th>
-                                    <th>Price</th>
-                                    <th>Quantity</th>
-                                    <th>Controls</th>
-                                </tr>
-                            </tfoot>
-                          </table>
-                    </div>
+                            <% items.forEach(function(item){ %>
+                            <tr>
+                                <td><%=item.productID %></td>
+                                <td><%=item.name %></td>
+                                <td><%=item.category %></td>
+                                <td><%=item.price %></td>
+                                <td><%=item.quantity %></td>
+                                <td>
+                                    <form action="/items/delete.html" method="POST">
+                                        <input type="hidden" name="id" />
+                                        <input type="submit" id="<%= item.productID %>" value="delete" onclick="deleteProduct('<%= item.productID %>');"/>
+                                    </form>
+                                </td>
+                            </tr>
+
+                            <%})%>
+
+
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <th>Id</th>
+                                <th>Name</th>
+                                <th>Category</th>
+                                <th>Price</th>
+                                <th>Quantity</th>
+                                <th>Controls</th>
+                            </tr>
+                        </tfoot>
+                    </table>
                 </div>
             </div>
-        </section>
+        </div>
+    </section>
 
-    </main>
-    <%- include("./partials/footer.ejs") %>
-        <script>
-            $(function () {
-                $("#example1").DataTable();
-            });
-        </script>
-    </body>
+</main>
+<%- include("./partials/footer.ejs") %>
+<script>
+    $(function () {
+        $("#example1").DataTable();
+    });
+    async function deleteProduct(productID) {
+
+        var res = await fetch(`/products/delete.html/${productID}`, {
+            method: "delete"
+
+        })
+        location.href= '/admin/showproduct.html'
+    }
+</script>
+</body>
+
 </html>
