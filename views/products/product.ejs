@@ -23,11 +23,11 @@
                         <div class="row">
                           <div class="col-md-5 p-5">
                               <div id="ex1">
-                                <img class="w-100" src="assets/img/categori/product7.png" alt="">
+                                <img class="w-100" src="<%=item.productImage%>" alt="">
                               </div>
                           </div>
                           <div class="col-md-7 p-5">
-                            <h3>Blue denim shirt</h3>
+                            <h3><%=item.name%></h3>
                             <p class="mb-2 text-muted text-uppercase small">Shirts</p>
                             <div class="product-caption">
                                 <div class="product-ratting">
@@ -39,23 +39,19 @@
                                 </div>
                                 <div class="price">
                                     <ul>
-                                        <li>$40.00</li>
-                                        <li class="discount">$60.00</li>
+                                        <li>$<%=item.price%></li>
+                                        <!-- --------------------------- -->
                                     </ul>
                                 </div>
                             </div>
-                            <p class="pt-1" style="text-align: justify;">Lorem ipsum dolor sit amet consectetur adipisicing elit. Numquam, sapiente illo. Sit
-                                error voluptas repellat rerum quidem, soluta enim perferendis voluptates laboriosam. Distinctio,
-                                officia quis dolore quos sapiente tempore alias.</p>
+                            <p class="pt-1" style="text-align: justify;">
+                                
+                                <%=item.description%>
+                            </p>
                                 <div class="mt-4">
                                     <div class="btn btn-primary mr-3">
                                       <i class="fas fa-cart-plus fa-lg mr-2"></i> 
                                       Add to Cart
-                                    </div>
-                    
-                                    <div class="btn btn-default">
-                                      <i class="fas fa-heart fa-lg mr-2"></i> 
-                                      Add to Wishlist
                                     </div>
                                 </div>
                           </div>
@@ -68,6 +64,9 @@
 
     </main>
     <%- include("../partials/footer.ejs") %>
+    <!-- Jquery Plugins, main Jquery -->	
+    <script src="./assets/js/plugins.js"></script>
+    <script src="./assets/js/main.js"></script>
         <script>
             $(document).ready(function(){
 			$('#ex1').zoom();

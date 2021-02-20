@@ -76,6 +76,7 @@
                                 </tr>
                             </thead>
                             <tbody>
+<<<<<<< HEAD
                                 <tr>
                                     <%console.log(items); %>
                                     <td>1</td>
@@ -101,6 +102,25 @@
                                     <td>300</td>
                                     <td>edit/delete</td>
                                 </tr>
+=======
+                                <% items.forEach(function(item){ %>
+                                    <tr>
+                                        <td><%=item.productID %></td>
+                                        <td><%=item.name %></td>
+                                        <td><%=item.category %></td>
+                                        <td><%=item.price %></td>
+                                        <td><%=item.quantity %></td>
+                                        <td>
+                                            <form action="/items/delete.html" method="POST">
+                                                <input type="hidden" value="<%= item.id %>" name="id" />
+                                                <input type="submit" value="delete" />
+                                            </form>
+                                        </td>
+                                    </tr>
+                            
+                                <% }) %>
+
+>>>>>>> f6399cf054cf339ecd5fad735cdf745cb5807399
                             </tbody>
                             <tfoot>
                                 <tr>

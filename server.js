@@ -94,6 +94,8 @@ app.use('/users/assets', express.static(__dirname + '/public/assets'));
 app.use('/home/assets', express.static(__dirname + '/public/assets'));
 app.use('/admin/assets', express.static(__dirname + '/public/assets'));
 app.use('/products/assets', express.static(__dirname + '/public/assets'));
+app.use('/products/productDetails.html/assets', express.static(__dirname + '/public/assets'));
+app.use('/products/productDetails.html', express.static('./public/upload'));
 app.use('/assets', express.static(__dirname + '/public/assets'));
 app.use('/upload', express.static(__dirname + '/public'));
 app.get('/', (req, res) => res.render('index', {
@@ -118,7 +120,7 @@ app.delete("/products/delete.html/:id", bodyParser, products.controler.delete)
 app.get("/home.html/logout", home.controler.logout);
 app.get("/home.html", home.controler.homeView);
 
-app.get("/products/productDetails.html/:pram", products.controler.productitem)
+app.get("/products/productDetails.html/:id", products.controler.productitem)
 
 
 app.get("/admin/addproduct.html", admin.controler.addproduct)
