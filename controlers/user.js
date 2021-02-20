@@ -50,7 +50,7 @@ exports.controler = {
                     pass: users[userIndex].password,
                     userID: users[userIndex].userID,
                     userImage: users[userIndex].imagename,
-                    file: ""
+                    flag: false
                 })
             } else {
                 res.send({
@@ -70,18 +70,18 @@ exports.controler = {
             var userIndex = users.findIndex((item) => item.userID == user);
             console.log(users[userIndex])
             if (user) {
-                req.session.name = `${users[userIndex].userID}${users[userIndex].name}`;
-                req.session.userID = users[userIndex].userID;
+                // req.session.destroy();
                 res.render('../views/users/profile.ejs', {
                     msg: 'Data updated please sign in again with new data',
                     err: false,
-                    login: 'no',
+                    // login: req.session.name ? 'ok' : 'no',
+                    login:'no',
                     userName: users[userIndex].name,
                     userEmail: users[userIndex].email,
                     pass: users[userIndex].password,
                     userID: users[userIndex].userID,
                     userImage: users[userIndex].imagename,
-                    file: ""
+                    flag: true
                 })
             } else {
                 res.send({
@@ -129,7 +129,7 @@ exports.controler = {
     edit: (req, res) => {
         var userIndex = users.findIndex((item) => item.userID == req.params.id);
 
-        let user =
+       
             upload(req, res, (error) => {
                 if (error) {
                     res.render('../views/users/profile.ejs', {
@@ -140,7 +140,8 @@ exports.controler = {
                         pass: users[userIndex].password,
                         userID: users[userIndex].userID,
                         userImage: users[userIndex].imagename,
-                        err: true
+                        err: true,
+                        flag:false
                     });
                 } else {
 
@@ -151,6 +152,8 @@ exports.controler = {
                     }
 
                     var imgName;
+                    console.log("req.body -> ")
+                    console.log(req.body)
                     if (req.file == undefined) {
                         imgName = users[userIndex].imagename;
                         users[userIndex].name = req.body.name;

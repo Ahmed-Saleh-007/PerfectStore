@@ -26,7 +26,9 @@
                                 <div class="col-md-4">
                                     <div class="avatar-upload">
                                         <div class="avatar-edit">
-                                            <input type="file" id="imageUpload" name="image">
+                                            <input type="file" id="imageUpload"
+                                             name="image"
+                                             >
                                             <label for="imageUpload">
                                                 <i class="fa fa-pencil-alt"></i>
                                             </label>
@@ -53,17 +55,37 @@
                                 <div class="col-md-8 pt-4">
                                     <div class="form-group">
                                         <label for="name">Name</label>
-                                        <input class="form-control" required="required" name="name" type="text" id="name" value= "<%= userName %>">
+                                        <input class="form-control" required="required" name="name" type="text" id="name" 
+                                        value= "<%= userName %>"
+                                        <%if(flag){%>
+                                            readonly
+                                            <%}%>
+                                        >
+
                                     </div>
                                     <div class="form-group">
                                         <label for="email">Email</label>
-                                        <input class="form-control" required="required" name="email" type="email" id="email" value= "<%= userEmail %>">
+                                        <input class="form-control" required="required" name="email" type="email" id="email" value= "<%= userEmail %>"
+                                        <%if(flag){%>
+                                            readonly
+                                            <%}%>
+                                        >
                                     </div>
                                     <div class="form-group">
                                         <label for="password">Password</label>
-                                        <input class="form-control" required="required" name="password" type="password" id="password" value= "<%= pass %>"">
+                                        <input class="form-control" required="required" name="password" type="password" id="password" value= "<%= pass %>""
+                                      
+
+                                            <%if(flag){%>
+                                                readonly
+                                                <%}%>
+                                        >
                                     </div>
-                                    <input class="btn btn-primary profile-submit" type="submit" value="Edit">
+                                    <input class="btn btn-primary profile-submit" type="submit" value="Edit"
+                                    <%if(flag){%>
+                                        style="display:none;"
+                                        <%}%>
+                                    >
                                 </div>
                             </div>
                         </form>
@@ -76,8 +98,11 @@
     <%- include("../partials/footer.ejs") %>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
     <script>
-
+        if(<%-flag%>){
+  document.getElementById("imageUpload").disabled = true;
+  }
 function readURL(input) {
+  
   if (input.files && input.files[0]) {
     var reader = new FileReader();
     
