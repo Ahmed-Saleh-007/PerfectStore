@@ -72,8 +72,18 @@
         <script>
             let arr = [];
             function saveProduct(arrr){
+                var existingEntries = JSON.parse(localStorage.getItem("products"));
+                arr.push(existingEntries);
                 arr.push(arrr);
-                console.log(arr);
+                
+               // console.log(arr);
+                //var names = [];
+             //   names[0] = prompt("New member name?");
+                localStorage.setItem("products", JSON.stringify(arr));
+
+                //...
+                var storedNames = JSON.parse(localStorage.getItem("products"));
+                console.log(storedNames);
             }
            // saveProduct();
         </script>
