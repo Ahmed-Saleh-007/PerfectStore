@@ -8,7 +8,7 @@ var config = require("../controlers/config");
 const storge = multer.diskStorage({
     destination: './public/upload',
     filename: function (req, file, cb) {
-        cb(null, `${productArray.length == 0 ? 1 :Number(productArray[productArray.length - 1].productID) + 1}-${req.body.productName}-${Date.now()}-${file.originalname}`);
+        cb(null, `${productArray.length == 0 ? 1 :Number(productArray[productArray.length - 1].productID) + 1}-${req.body.name}-${Date.now()}-${file.originalname}`);
     }
 });
 
