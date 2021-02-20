@@ -70,7 +70,7 @@ exports.controler = {
             });
         }
      } else{
-            res.send('<script> location.href = "/home.html" </script>');
+           
         }
     },
     allproductsView: function (req, res) {
