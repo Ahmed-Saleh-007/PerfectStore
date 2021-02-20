@@ -34,16 +34,13 @@ const upload = multer({
 
 exports.controler = {
     viwe: function (req, res) {
-        if(req.session.name){
+        if (req.session.name) {
             let user = req.session.userID;
             var userIndex = users.findIndex((item) => item.userID == user);
             console.log(users[userIndex])
             if (user) {
-                // req.session.userName = users[userIndex].name;
-                // req.session.userEmail = users[userIndex].email;
-                // req.session.userPass = users[userIndex].password;
                 req.session.name = `${users[userIndex].userID}${users[userIndex].name}`;
-            req.session.userID =users[userIndex].userID ;  
+                req.session.userID = users[userIndex].userID;
                 res.render('../views/users/profile.ejs', {
                     msg: '',
                     err: -1,
@@ -59,13 +56,43 @@ exports.controler = {
                 res.send({
                     error: "user not found"
                 });
-    
+
             }
-    
-        }else{
+
+        } else {
             res.send('<script> location.href = "/home.html" </script>');
         }
-        
+
+    },
+    viewedit: (req, res) => {
+        if (req.session.name) {
+            let user = req.session.userID;
+            var userIndex = users.findIndex((item) => item.userID == user);
+            console.log(users[userIndex])
+            if (user) {
+                req.session.name = `${users[userIndex].userID}${users[userIndex].name}`;
+                req.session.userID = users[userIndex].userID;
+                res.render('../views/users/profile.ejs', {
+                    msg: 'Data updated please sign in again with new data',
+                    err: false,
+                    login: 'no',
+                    userName: users[userIndex].name,
+                    userEmail: users[userIndex].email,
+                    pass: users[userIndex].password,
+                    userID: users[userIndex].userID,
+                    userImage: users[userIndex].imagename,
+                    file: ""
+                })
+            } else {
+                res.send({
+                    error: "user not found"
+                });
+
+            }
+
+        } else {
+            res.send('<script> location.href = "/home.html" </script>');
+        }
     },
     delete: function (req, res) {
         var userIndex = productArray.findIndex((item) => item.userID == req.params.id);
@@ -101,77 +128,77 @@ exports.controler = {
     },
     edit: (req, res) => {
         var userIndex = users.findIndex((item) => item.userID == req.params.id);
-        
-        let user = 
-        upload(req, res, (error) => {
-            if (error) {
-                res.render('../views/users/profile.ejs', {
-                    msg: `Error: ${error.message}`,
-                    login: req.session.name ? 'ok' : 'no',
-                    userName: `${users[userIndex].name}`,
-                    userEmail: users[userIndex].email,
-                    pass: users[userIndex].password,
-                    userID: users[userIndex].userID,
-                    userImage: users[userIndex].imagename,
-                    err: true
-                });
-            } else {
 
-
-                if (config.controler.mode == 'devolopment') {
-                    console.log(req.file);
-                    console.log(req.body);
-                }
-             
-                var imgName;
-                if (req.file == undefined) {
-                    imgName = users[userIndex].imagename;
-                    users[userIndex].name = req.body.name;
-                    users[userIndex].email = req.body.email;
-                    users[userIndex].imagename = imgName;
+        let user =
+            upload(req, res, (error) => {
+                if (error) {
+                    res.render('../views/users/profile.ejs', {
+                        msg: `Error: ${error.message}`,
+                        login: req.session.name ? 'ok' : 'no',
+                        userName: `${users[userIndex].name}`,
+                        userEmail: users[userIndex].email,
+                        pass: users[userIndex].password,
+                        userID: users[userIndex].userID,
+                        userImage: users[userIndex].imagename,
+                        err: true
+                    });
                 } else {
-                    try {
-                        fs.unlinkSync(`public/upload/usersImges/${users[userIndex].imagename}`);
 
-                    } catch (e) {
-                        res.status(400).send({
-                            message: "Error deleting image!",
-                            error: e.toString(),
-                            req: req.body
-                        });
+
+                    if (config.controler.mode == 'devolopment') {
+                        console.log(req.file);
+                        console.log(req.body);
                     }
-                    imgName = `${req.file.filename}`
-                    users[userIndex].name = req.body.name;
-                    users[userIndex].email = req.body.email;
-                    users[userIndex].imagename = imgName;
+
+                    var imgName;
+                    if (req.file == undefined) {
+                        imgName = users[userIndex].imagename;
+                        users[userIndex].name = req.body.name;
+                        users[userIndex].email = req.body.email;
+                        users[userIndex].imagename = imgName;
+                    } else {
+                        try {
+                            fs.unlinkSync(`public/upload/usersImges/${users[userIndex].imagename}`);
+
+                        } catch (e) {
+                            res.status(400).send({
+                                message: "Error deleting image!",
+                                error: e.toString(),
+                                req: req.body
+                            });
+                        }
+                        imgName = `${req.file.filename}`
+                        users[userIndex].name = req.body.name;
+                        users[userIndex].email = req.body.email;
+                        users[userIndex].imagename = imgName;
 
 
 
 
-                   
 
+
+
+
+                    }
+                    saveUsersArrayToFile();
+                    // res.render('../views/users/profile.ejs', {
+                    //     msg: 'File Uploaded',
+                    //     login: req.session.name ? 'ok' : 'no',
+                    //     err: 0,
+                    //     items: users,
+                    //     userName: `${users[userIndex].name}`,
+                    //     userEmail: users[userIndex].email,
+                    //     pass: users[userIndex].password,
+                    //     userID: users[userIndex].userID,
+                    //     userImage: users[userIndex].imagename
+                    // });
+
+                    res.send("<script> location.href = '/users/user/viewedit.html'</script>")
 
 
                 }
-                saveUsersArrayToFile();
-                // res.render('../views/users/profile.ejs', {
-                //     msg: 'File Uploaded',
-                //     login: req.session.name ? 'ok' : 'no',
-                //     err: 0,
-                //     items: users,
-                //     userName: `${users[userIndex].name}`,
-                //     userEmail: users[userIndex].email,
-                //     pass: users[userIndex].password,
-                //     userID: users[userIndex].userID,
-                //     userImage: users[userIndex].imagename
-                // });
-               
-                res.send("<script> location.href = '/users/user.html'</script>")
-               
-                
-            }
 
-        });
+            });
 
     }
 }

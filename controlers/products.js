@@ -51,6 +51,7 @@ const upload = multer({
 
 exports.controler = {
     allproducts:function (req, res) {
+        if(req.session.is_Admin === 'true'){
         if(productArray.length == 0){
             res.render('adminProductControl', {
                 msg: 'File Uploaded',
@@ -67,6 +68,9 @@ exports.controler = {
                 items:productArray
                 
             });
+        }
+     } else{
+            res.send('<script> location.href = "/home.html" </script>');
         }
     },
     allproductsView: function (req, res) {

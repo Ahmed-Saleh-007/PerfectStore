@@ -1,5 +1,7 @@
 var fs = require("fs");
-const { config } = require("process");
+const {
+    config
+} = require("process");
 var validation = require("./validation");
 var isFoundBefore = false;
 var isMatch = true;
@@ -21,10 +23,22 @@ var errors = {
     passwordConfirmationErrorMessage: "",
     generalErrorMessage: ""
 }
+var data = {
+    name: "",
+    email: "",
+    password: "",
+    passwordConfirmation: ""
+}
 exports.controler = {
     register: function (req, res) {
-        console.log("req.body -> " + req.body.password);
+        if (req.session.name) {
+            res.send("<script>location.href= 'products/productList.html'</script>")
+        }else{
 
+            data['name'] = req.body.name;
+            data['email'] = req.body.email;
+            data['password'] = req.body.password;
+            data['passwordConfirmation'] = req.body.password_confirmation;
         var validName = validation.controler.username(req.body.name);
         var validEmail = validation.controler.email(req.body.email);
         var isAdmin = validation.controler.admin(req.body.email);
@@ -42,10 +56,10 @@ exports.controler = {
                     isMatch = false;
                     errorFlag = true;
                 } else {
-                    
+
                     console.log('ok');
                     console.log('isAdmin -> ' + isAdmin);
-                    
+
                     var newqq = {};
                     var id;
                     if (users.length == 0) {
@@ -56,13 +70,17 @@ exports.controler = {
 
                     Object.assign(newqq, {
                         userID: `${id}`
-                    }, req.body,{isadmin:`${isAdmin}`},{imagename:""});
+                    }, req.body, {
+                        isadmin: `${isAdmin}`
+                    }, {
+                        imagename: ""
+                    });
                     users.push(newqq);
                     saveUsersArrayToFile();
-                   
-                        res.send("<script>location.href= '/login.html'</script>")
-                   
-                   
+
+                    res.send("<script>location.href= '/login.html'</script>")
+
+
 
 
                 }
@@ -71,7 +89,7 @@ exports.controler = {
         } else {
             errorFlag = true;
         }
-        if(errorFlag){
+        if (errorFlag) {
             console.log('validName ' + validName)
             console.log('validEmail ' + validEmail)
             console.log('validPassword ' + validPassword)
@@ -84,62 +102,66 @@ exports.controler = {
             validPasswordConfirmation ? errors['passwordConfirmationErrorMessage'] = "" : errors['passwordConfirmationErrorMessage'] = "* Password Confirmation must be more than 8 digits";
             isFoundBefore ? errors['generalErrorMessage'] = '* This email registered before, please try with another email' : errors['generalErrorMessage'] = "";
             // isMatch ?  errors['generalErrorMessage'] ="" : errors['generalErrorMessage'] = '* Password Does not match, please try again';
+            errorFlag = false;
             res.render("auth/register.ejs", {
-                ...errors
+                ...errors,
+                ...data
             })
         }
-        
 
+    }
 
     },
     login: function (req, res) {
-        // res.send("ok")
-        // console.log(req.body)
-        let user = users.find(q => q.email == req.body.email && q.password == req.body.password);
-        var userIndex = users.findIndex((item) => item.email == req.body.email);
-        if (user) {
 
-            var sessiondId = `${users[userIndex].userID}${users[userIndex].name}`;
-            req.session.name = sessiondId;
-            req.session.userID = `${users[userIndex].userID}`
-            req.session.is_Admin = `${users[userIndex].isadmin}`
-            console.log("sessiondId = " + sessiondId)
-            console.log(' req.session.userID -> '+ req.session.userID);
-            console.log(' req.session.is_Admin -> '+ req.session.is_Admin);
-            if (req.session.sessiondId) {
-                req.session.sessiondId++;
-
+        if (req.session.name) {
+            res.send("<script>location.href= 'products/productList.html'</script>")
+        }else{
+            let user = users.find(q => q.email == req.body.email && q.password == req.body.password);
+            var userIndex = users.findIndex((item) => item.email == req.body.email);
+            if (user) {
+    
+                var sessiondId = `${users[userIndex].userID}${users[userIndex].name}`;
+                req.session.name = sessiondId;
+                req.session.userID = `${users[userIndex].userID}`
+                req.session.is_Admin = `${users[userIndex].isadmin}`
+                console.log(' req.session.userID -> ' + req.session.userID);
+                console.log(req.session)
+    
+                console.log(' req.session.is_Admin -> ' + req.session.is_Admin);
+                if (req.session.sessiondId) {
+                    req.session.sessiondId++;
+    
+                } else {
+                    req.session.sessiondId = 1;
+    
+                }
+                if (`${users[userIndex].isadmin}` === 'true') {
+                    res.send("<script>location.href= '/admin/showproduct.html'</script>")
+                } else {
+                    res.send("<script>location.href= 'products/productList.html'</script>")
+                }
+    
+                // res.render("products/productList.ejs", {
+                //     login: "ok",
+                //     reload: true
+                // });
+    
+                //generate session id ( random string or number)
+                //add cookie with session id
+                //user.sessiondId= 
+    
             } else {
-                req.session.sessiondId = 1;
-
+                res.render("auth/login.ejs", {
+                    errormessage: "email or password not correct"
+                })
             }
-            if(`${users[userIndex].isadmin}` === 'true'){
-                res.send("<script>location.href= '/admin/showproduct.html'</script>")
-            }else{
-                res.send("<script>location.href= 'products/productList.html'</script>")
-            }
-            
-            // res.render("products/productList.ejs", {
-            //     login: "ok",
-            //     reload: true
-            // });
-
-            //generate session id ( random string or number)
-            //add cookie with session id
-            //user.sessiondId= 
-
-        } else {
-            res.render("auth/login.ejs", {
-                errormessage: "email or password not correct"
-            })
         }
+        
     },
     loginView: function (req, res) {
         if (req.session.name) {
-            // res.render("products/productList.ejs", {
-            //     login: "ok",
-            //     reload: true
-            // });    
+
             res.send("<script>location.href= 'products/productList.html'</script>")
 
         } else {
@@ -151,9 +173,14 @@ exports.controler = {
     },
 
     registerView: function (req, res) {
-        res.render("auth/register.ejs", {
-            ...errors
-        })
+        if (req.session.name) {
+            res.send("<script>location.href= 'products/productList.html'</script>")
+        } else {
+            res.render("auth/register.ejs", {
+                ...errors, ...data
+            })
+        }
+
     }
 }
 

@@ -6,6 +6,10 @@ const path = require('path');
 
 var cookieParser = require('cookie-parser');
 var session = require('express-session');
+// var MongoStore = require('connect-mongostore')(express);
+// const redis = require('redis');
+// const redisStore = require('connect-redis')(session);
+// const client  = redis.createClient();
 //-----------------------------------------------
 
 
@@ -83,7 +87,8 @@ app.set('view engine', 'ejs');
 
 //-----------------------------------------------
 app.use(cookieParser());
-app.use(session({secret: "Shh, its a secret!"}));
+// app.use(session({secret: "Shh, its a secret!"}));
+app.use(session({ secret: 'keyboard cat', cookie: { maxAge: 60000,expires:new Date(Date.now() + 60000) }}))
 //-----------------------------------------------
 
 // public folder
@@ -91,6 +96,7 @@ app.use(express.static('./public/upload'));
 app.use(express.static('./public/upload/usersImges'));
 // app.use(express.static('./upload'));
 app.use(express.static('./public'));
+app.use('/users/user/assets', express.static(__dirname + '/public/assets'));
 app.use('/users/assets', express.static(__dirname + '/public/assets'));
 app.use('/home/assets', express.static(__dirname + '/public/assets'));
 app.use('/admin/assets', express.static(__dirname + '/public/assets'));
@@ -99,6 +105,8 @@ app.use('/products/productDetails.html/assets', express.static(__dirname + '/pub
 app.use('/users/edituser.html/assets', express.static(__dirname + '/public/assets'));
 app.use('/users/edituser.html/', express.static('./public/upload/usersImges'));
 app.use('/users', express.static('./public/upload/usersImges'));
+app.use('/users/user', express.static('./public/upload/usersImges'));
+
 
 app.use('/products/productDetails.html', express.static('./public/upload'));
 app.use('/assets', express.static(__dirname + '/public/assets'));
@@ -110,6 +118,7 @@ app.get('/', (req, res) => res.render('index', {
 }));
 
 app.use('/products', express.static("./public/upload"));
+app.get("/users/login.html", auth.controler.loginView)
 app.get("/login.html", auth.controler.loginView)
 app.get("/register.html", auth.controler.registerView)
 app.post("/login.html", bodyParser, auth.controler.login)
@@ -119,6 +128,7 @@ app.post("/register.html", bodyParser, auth.controler.register)
 app.get("/products/allproduct.html", products.controler.allproducts)
 app.get("/products/productList.html", products.controler.allproductsView)
 app.get("/products/productList.html/:id", products.controler.productsViewByPage)
+
 app.post("/products/add.html", bodyParser, products.controler.add)
 app.delete("/products/delete.html/:id", bodyParser, products.controler.delete)
 
@@ -137,6 +147,7 @@ app.get("/admin/productControl.html", admin.controler.adminProductControl)
 
 
 app.get("/users/user.html", user.controler.viwe)
+app.get("/users/user/viewedit.html", user.controler.viewedit)
 app.post("/users/edituser.html/:id", bodyParser, user.controler.edit)
 app.delete("/users/deleteuser.html/:id", bodyParser, user.controler.delete)
 
