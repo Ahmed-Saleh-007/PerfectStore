@@ -76,31 +76,23 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <% %>
-                                    <td>1</td>
-                                    <td>shirt</td>
-                                    <td>man</td>
-                                    <td>100</td>
-                                    <td>120</td>
-                                    <td>edit/delete</td>
-                                </tr>
-                                <tr>
-                                    <td>2</td>
-                                    <td>shirt</td>
-                                    <td>man</td>
-                                    <td>150</td>
-                                    <td>200</td>
-                                    <td>edit/delete</td>
-                                </tr>
-                                <tr>
-                                    <td>3</td>
-                                    <td>shirt</td>
-                                    <td>woman</td>
-                                    <td>250</td>
-                                    <td>300</td>
-                                    <td>edit/delete</td>
-                                </tr>
+                                <% items.forEach(function(item){ %>
+                                    <tr>
+                                        <td><%=item.productID %></td>
+                                        <td><%=item.name %></td>
+                                        <td><%=item.category %></td>
+                                        <td><%=item.price %></td>
+                                        <td><%=item.quantity %></td>
+                                        <td>
+                                            <form action="/items/delete.html" method="POST">
+                                                <input type="hidden" value="<%= item.id %>" name="id" />
+                                                <input type="submit" value="delete" />
+                                            </form>
+                                        </td>
+                                    </tr>
+                            
+                                <% }) %>
+
                             </tbody>
                             <tfoot>
                                 <tr>

@@ -1,9 +1,1 @@
-[{
-    "productID": "1",
-    "name": "aaaa",
-    "category": "women",
-    "price": "120",
-    "quantity": "12",
-    "description": "abcd",
-    "productImage": "1-undefined-1613777546594-category_1.png"
-}]
+[{"productID":"1","name":"aaaa","category":"women","price":"120","quantity":"12","description":"abcd","productImage":"1-undefined-1613777546594-category_1.png"},{"productID":"2","name":"aaa","category":"man","price":"10","quantity":"50","description":"sss","productImage":"2-undefined-1613779560865-128446747_4990554570987021_4963310109528151460_n.jpg"}]
