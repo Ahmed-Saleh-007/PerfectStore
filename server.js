@@ -101,6 +101,7 @@ app.use('/users/assets', express.static(__dirname + '/public/assets'));
 app.use('/home/assets', express.static(__dirname + '/public/assets'));
 app.use('/admin/assets', express.static(__dirname + '/public/assets'));
 app.use('/products/assets', express.static(__dirname + '/public/assets'));
+app.use('/products/product/assets', express.static(__dirname + '/public/assets'));
 app.use('/products/productDetails.html/assets', express.static(__dirname + '/public/assets'));
 app.use('/users/edituser.html/assets', express.static(__dirname + '/public/assets'));
 app.use('/users/edituser.html/', express.static('./public/upload/usersImges'));
@@ -126,6 +127,7 @@ app.post("/register.html", bodyParser, auth.controler.register)
 
 
 app.get("/products/allproduct.html", products.controler.allproducts)
+app.get("/products/product/cart.html", products.controler.cartview)
 app.get("/products/productList.html", products.controler.allproductsView)
 app.get("/products/productList.html/:id", products.controler.productsViewByPage)
 

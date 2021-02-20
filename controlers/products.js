@@ -73,6 +73,19 @@ exports.controler = {
            
         }
     },
+    cartview:(req,res)=>{
+        if(req.session.name){
+            res.render("products/cart.ejs", {
+                msg: '',
+                err: -1,
+                login: req.session.name ? 'ok' : 'no'
+            })
+        }else{
+            res.send('<script> location.href = "/home.html" </script>');
+
+        }
+        
+    },
     allproductsView: function (req, res) {
         console.log(req.session);
         res.render("products/productList.ejs", {
