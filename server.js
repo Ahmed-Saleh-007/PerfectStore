@@ -136,6 +136,7 @@ app.delete("/products/delete.html/:id", bodyParser, products.controler.delete)
 
 app.get("/home.html/logout", home.controler.logout);
 app.get("/home.html", home.controler.homeView);
+app.get("/about.html", home.controler.aboutView);
 
 app.get("/products/productDetails.html/:id", products.controler.productitem)
 

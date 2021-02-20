@@ -142,4 +142,42 @@ $(document).ready(function () {
 
   /* 8. WOW active */
   new WOW().init();
+
+  /* 9. nice select*/
+  $("html").niceScroll({
+    cursorcolor: '#2577fd', //#ff003c
+    cursorborder: 'none',
+    cursorwidth: '8px',
+    scrollspeed: '100',
+    zindex: '9999',
+    cursoropacitymin:0.2,
+  });
+
+  /* 10. slider for about page*/
+  var review = $('.client_review_slider');
+  if (review.length) {
+    review.owlCarousel({
+      items: 1,
+      loop: true,
+      dots: true,
+      autoplay: true,
+      autoplayHoverPause: true,
+      autoplayTimeout: 5000,
+      nav: true,
+      dots: false,
+      navText: [" <i class='ti-angle-left'></i> ", "<i class='ti-angle-right'></i> "],
+      responsive: {
+        0: {
+          nav: false
+        },
+        768: {
+          nav: false
+        },
+        991: {
+          nav: true
+        }
+      }
+    });
+  }
+
 });

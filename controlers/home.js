@@ -29,5 +29,21 @@ exports.controler = {
             login: req.session.name ? 'ok' : 'no'
         })
 
+    },
+    aboutView: function (req, res) {
+
+        console.log("/about.html -> ");
+        console.log("Start session -> ");
+        console.log(req.session)
+        console.log("end session -> ");
+
+
+        res.render("../views/about.ejs", {
+
+            msg: '',
+            err: -1,
+            login: req.session.name ? 'ok' : 'no'
+        })
+
     }
 }
