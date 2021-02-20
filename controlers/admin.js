@@ -3,7 +3,8 @@ exports.controler = {
     addproduct: function (req,res) {
         res.render("../views/adminProductControl.ejs",{
             err:-1,
-            login: req.session.name?'ok':'no'
+            login: req.session.name?'ok':'no',
+            items:[]
         })
 
     },
@@ -11,7 +12,8 @@ exports.controler = {
         if(req.session.is_Admin === 'true'){
             res.render("../views/adminProductControl.ejs",{
                 err:-1,
-                login: req.session.name?'ok':'no'
+                login: req.session.name?'ok':'no',
+                items:[]
             })
         }else{
             res.send('<script> location.href = "/home.html" </script>');
