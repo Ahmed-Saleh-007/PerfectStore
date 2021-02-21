@@ -101,6 +101,7 @@ app.use('/users/assets', express.static(__dirname + '/public/assets'));
 app.use('/home/assets', express.static(__dirname + '/public/assets'));
 app.use('/admin/assets', express.static(__dirname + '/public/assets'));
 app.use('/products/cart/assets', express.static(__dirname + '/public/assets'));
+app.use('/products/cart/view.html/assets', express.static(__dirname + '/public/assets'));
 app.use('/products/assets', express.static(__dirname + '/public/assets'));
 app.use('/products/product/assets', express.static(__dirname + '/public/assets'));
 app.use('/products/productDetails.html/assets', express.static(__dirname + '/public/assets'));
