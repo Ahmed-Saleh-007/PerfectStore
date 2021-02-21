@@ -31,19 +31,12 @@
                                     <h6 class="price">Sub-Total</h6>
                                 </div>
                                 <div class="col-md-2 col-4">
-                                    <h6>22.5$</h6>
+                                    <h6 id="total"></h6>
                                 </div>
                             </div>
-                            <div class=" row justify-content-around my-2">
-                                <div class="col-md-8 col-6">
-                                    <h6 class="price">Delivery</h6>
-                                </div>
-                                <div class="col-md-2 col-4">
-                                    <h6>0.0$</h6>
-                                </div>
-                            </div>
+                           
                             <div>
-                                <button class="btn btn-success my-2 w-100">Checkout</button>
+                                <button class="btn my-2 w-100">Checkout</button>
                             </div>
                         </div>
                     </div>
@@ -51,33 +44,8 @@
             </div>    
         </div>
     </section>
+    <script src="./assets/js/addDataToCart.js"></script>
 
-    <script>
-        function showdata(items){
-           // console.log(items);
-           // data = JSON.parse(items);
-           let data = ``;
-            items.forEach(element => {
-                data +=`
-                <div class="col-md-4  col-sm-8">
-                            <img src="${element.productImage}" class="w-100" alt="">
-                        </div>
-                        <div class="col-md-8 pt-4  col-sm-8">
-                            <h3 class="price">${element.price}</h3>
-                            <p class="py-2">${element.description}</p>
-                            <a href="/products/cart/delete.html/${element.productID}" class="btn">Remove</a>
-                </div>
-                `
-
-            });
-            document.getElementById('data').innerHTML = data;
-        }
-
-        // function showData(){
-
-        // }
-
-    </script>
 </body>
 <%- include("../partials/footer.ejs") %>
    
