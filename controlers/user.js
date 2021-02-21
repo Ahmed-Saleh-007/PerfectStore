@@ -74,8 +74,8 @@ exports.controler = {
                 res.render('../views/users/profile.ejs', {
                     msg: 'Data updated please sign in again with new data',
                     err: false,
-                    // login: req.session.name ? 'ok' : 'no',
-                    login:'no',
+                     login: req.session.name ? 'ok' : 'no',
+                    // login:'no',
                     userName: users[userIndex].name,
                     userEmail: users[userIndex].email,
                     pass: users[userIndex].password,

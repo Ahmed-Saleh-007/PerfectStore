@@ -4,7 +4,7 @@ const path = require('path');
 var config = require("../controlers/config");
 var helpFunction = require("../controlers/help");
 
-
+var cart = require("./cart");
 //set storge engine
 const storge = multer.diskStorage({
     destination: './public/upload',
@@ -262,6 +262,15 @@ exports.controler = {
             login: req.session.name ? 'ok' : 'no',
             errormessage: ""
         })
+    },
+    addtocart:(req, res) => {
+        if(req.session.name){
+            var productIndex = productArray.findIndex((item) => item.productID == req.params.id);
+            cart.controler.add(productArray[productIndex]);
+        }else{
+            res.send('<script> location.href = "/home.html" </script>');
+        }
+       
     }
 }
 

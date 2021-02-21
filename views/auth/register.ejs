@@ -41,64 +41,65 @@
             <div class="alert alert-danger" role="alert"><%= userNameErrorMessage %></div>
             <%}%>
                     <div class="input-group mb-3">
-                        <input type="text" name="name" class="form-control" id="name" value="<%= name %>" autocomplete="off">
-                        <label for="name">Name</label>
-                        <div class="input-group-append">
-                          <div class="input-group-text">
-                            <span class="fas fa-user"></span>
-                          </div>
-                        </div>
-                    </div>
-                    <%if(emailErrorMessage !== ""){%>
-            <div class="alert alert-danger" role="alert"><%= emailErrorMessage %></div>
-            <%}%>
+                        <input type="text" name="name" class="form-control" id="name" value="<%= name %>"
+            autocomplete="off">
+            <label for="name">Name</label>
+            <div class="input-group-append">
+                <div class="input-group-text">
+                    <span class="fas fa-user"></span>
+                </div>
+            </div>
+        </div>
+        <%if(emailErrorMessage !== ""){%>
+        <div class="alert alert-danger" role="alert"><%= emailErrorMessage %></div>
+        <%}%>
         <div class="input-group mb-3">
             <input type="email" name="email" class="form-control" id="email" value="<%= email %>" autocomplete="off">
-            <label for="email">Email</label>
-            <div class="input-group-append">
-                <div class="input-group-text">
-                    <span class="fas fa-envelope"></span>
-                </div>
+        <label for="email">Email</label>
+        <div class="input-group-append">
+            <div class="input-group-text">
+                <span class="fas fa-envelope"></span>
             </div>
         </div>
-        <%if(passwordErrorMessage !== ""){%>
-            <div class="alert alert-danger" role="alert"><%= passwordErrorMessage %></div>
-            <%}%>
+    </div>
+    <%if(passwordErrorMessage !== ""){%>
+    <div class="alert alert-danger" role="alert"><%= passwordErrorMessage %></div>
+    <%}%>
         <div class="input-group mb-3">
             <input type="password" name="password" class="form-control" id="password" value="<%= password %>">
-            <label for="password">Password</label>
-            <div class="input-group-append">
-                <div class="input-group-text">
-                    <span class="fas fa-lock"></span>
-                </div>
-            </div>
+    <label for="password">Password</label>
+    <div class="input-group-append">
+        <div class="input-group-text">
+            <span class="fas fa-lock"></span>
         </div>
-        <%if(passwordConfirmationErrorMessage !== ""){%>
-            <div class="alert alert-danger" role="alert"><%= passwordConfirmationErrorMessage %></div>
-            <%}%>
+    </div>
+    </div>
+    <%if(passwordConfirmationErrorMessage !== ""){%>
+    <div class="alert alert-danger" role="alert"><%= passwordConfirmationErrorMessage %></div>
+    <%}%>
         <div class="input-group mb-3">
             <input type="password" name="password_confirmation" class="form-control" id="password_confirmation" value="<%= passwordConfirmation %>">
-            <label for="password_confirmation">Confirm Password</label>
-            <div class="input-group-append">
-                <div class="input-group-text">
-                    <span class="fas fa-lock"></span>
-                </div>
-            </div>
+    <label for="password_confirmation">Confirm Password</label>
+    <div class="input-group-append">
+        <div class="input-group-text">
+            <span class="fas fa-lock"></span>
         </div>
-        <div class="row">
-            <div class="col-sm-12">
-                <button type="submit" class="btn btn-primary btn-block btn-flat">Sign Up</button>
-            </div>
-            <!-- /.col -->
+    </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
+            <button type="submit" class="btn btn-primary btn-block btn-flat">Sign Up</button>
         </div>
-        </form>
+        <!-- /.col -->
+    </div>
+    </form>
 
-        <div class="hr-container">
-            <hr>
-            <label>Or</label>
-        </div>
+    <div class="hr-container">
+        <hr>
+        <label>Or</label>
+    </div>
 
-        <a href="login.html" class="register">already member? login now <i class="fa fa-arrow-right"></i> </a>
+    <a href="login.html" class="register">already member? login now <i class="fa fa-arrow-right"></i> </a>
 
 
 
@@ -112,6 +113,13 @@
     <!-- Bootstrap 4 -->
     <script src="assets/js/bootstrap.min.js"></script>
     <script>
+        $(".input-group input").each(function () {
+            if ($(this).val() != "") {
+            $(this).addClass('filled');
+            } else {
+                $(this).removeClass('filled');
+            }
+        });
         $(".input-group input").change(function () {
             if ($(this).val() != "") {
                 $(this).addClass('filled');

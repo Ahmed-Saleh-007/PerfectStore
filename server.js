@@ -23,8 +23,8 @@ var home = require("./controlers/home");
 var admin = require("./controlers/admin");
 var user = require("./controlers/user");
 var config = require("./controlers/config");
-var auth = require("./controlers/auth");
-// var items = require("./controlers/items");
+var auth = require("./controlers/auth"); 
+var cart = require("./controlers/cart");
 var products = require("./controlers/products");
 var fs = require("fs");
 var productArray = [];
@@ -88,7 +88,7 @@ app.set('view engine', 'ejs');
 //-----------------------------------------------
 app.use(cookieParser());
 // app.use(session({secret: "Shh, its a secret!"}));
-app.use(session({ secret: 'keyboard cat', cookie: { maxAge: 60000,expires:new Date(Date.now() + 60000) }}))
+app.use(session({ secret: 'keyboard cat', cookie: { maxAge: 60000000000,expires:new Date(Date.now() + 60000000000) }}))
 //-----------------------------------------------
 
 // public folder
@@ -100,6 +100,7 @@ app.use('/users/user/assets', express.static(__dirname + '/public/assets'));
 app.use('/users/assets', express.static(__dirname + '/public/assets'));
 app.use('/home/assets', express.static(__dirname + '/public/assets'));
 app.use('/admin/assets', express.static(__dirname + '/public/assets'));
+app.use('/products/cart/assets', express.static(__dirname + '/public/assets'));
 app.use('/products/assets', express.static(__dirname + '/public/assets'));
 app.use('/products/product/assets', express.static(__dirname + '/public/assets'));
 app.use('/products/productDetails.html/assets', express.static(__dirname + '/public/assets'));
@@ -134,12 +135,20 @@ app.get("/products/productList.html/:id", products.controler.productsViewByPage)
 app.post("/products/add.html", bodyParser, products.controler.add)
 app.delete("/products/delete.html/:id", bodyParser, products.controler.delete)
 
+
+app.get("/products/cart/view.html", bodyParser, cart.controler.cartview)
+app.post("/products/cart/add.html", bodyParser, cart.controler.add)
+// app.get("/products/cart/add.html/:data", bodyParser, cart.controler.add)
+app.delete("/products/cart/delete.html/:id", bodyParser, cart.controler.delete)
+
 app.get("/home.html/logout", home.controler.logout);
 app.get("/home.html", home.controler.homeView);
 app.get("/about.html", home.controler.aboutView);
 
 app.get("/products/productDetails.html/:id", products.controler.productitem)
 
+
+app.get("/products/addtocart.html/:id", products.controler.addtocart)
 
 app.get("/admin/addproduct.html", admin.controler.addproduct)
 app.get("/admin/showproduct.html", products.controler.allproducts)
