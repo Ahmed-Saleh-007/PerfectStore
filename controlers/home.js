@@ -1,4 +1,4 @@
-
+var cart = require("../controlers/cart");
 exports.controler = {
     logout: function (req, res) {
         
@@ -14,6 +14,7 @@ exports.controler = {
             err: -1,
             login: req.session.name ? 'ok' : 'no',
             isAdmin: req.session.isAdmin === 'true'?'yes':'no',
+            itemsCount:cart.controler.getCartItemsCount(req, res)
         })
 
     },
@@ -25,6 +26,7 @@ exports.controler = {
             err: -1,
             login: req.session.name ? 'ok' : 'no',
             isAdmin: req.session.isAdmin === 'true'?'yes':'no',
+            itemsCount:cart.controler.getCartItemsCount(req, res)
         })
 
     }

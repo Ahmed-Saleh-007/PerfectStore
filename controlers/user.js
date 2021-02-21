@@ -5,12 +5,13 @@ var validation = require("./validation");
 var config = require("../controlers/config");
 var helpFunction = require("../controlers/help");
 var log = require("../controlers/log")
-
+var cart = require("../controlers/cart")
 var errors = {
     userNameErrorMessage: "",
     emailErrorMessage: "",
     passwordErrorMessage: "",
     generalErrorMessage: "",
+    passwordConfirmationErrorMessage:"",
     ismatchErrorMessage: ""
 }
 var data = {
@@ -69,6 +70,7 @@ exports.controler = {
                     userID: users[userIndex].userID,
                     userImage: users[userIndex].imagename,
                     flag: false,
+                    itemsCount:cart.controler.getCartItemsCount(req, res),
                     ...errors
                 })
             } else {
@@ -103,6 +105,7 @@ exports.controler = {
                     userID: users[userIndex].userID,
                     userImage: users[userIndex].imagename,
                     flag: false,
+                    itemsCount:cart.controler.getCartItemsCount(req, res),
                     ...errors
                 })
             } else {
@@ -165,7 +168,8 @@ exports.controler = {
                         userID: users[userIndex].userID,
                         userImage: users[userIndex].imagename,
                         err: true,
-                        flag:false
+                        flag:false,
+                        itemsCount:cart.controler.getCartItemsCount(req, res)
                     });
                 } else {
 
@@ -233,6 +237,7 @@ exports.controler = {
                             userImage: users[userIndex].imagename,
                             err: -1,
                             flag:false,
+                            itemsCount:cart.controler.getCartItemsCount(req, res),
                             ...errors
                         });
                     }

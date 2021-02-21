@@ -65,6 +65,7 @@ $('.show-popup').click(function (e) {
         console.log('click -> ')
         saveAs(imagePath,"image.jpeg");
         $("#imagePreview").attr("src", imagePath);
+        $("#imageUpload").attr("value", imagePath);
     });
      
     function getFileName(str) {

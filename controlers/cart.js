@@ -1,3 +1,4 @@
+const { count } = require("console");
 var fs = require("fs");
 const path = require('path');
 var config = require("../controlers/config");
@@ -12,7 +13,17 @@ if (fs.existsSync("db/cart.json")) {
 
 
 exports.controler = {
+    getCartItemsCount:(req,res) =>{
 
+        var count = 0;
+        cartItems.forEach(item => {
+               
+            if(item.userID == req.session.userID){
+                count++;
+            }
+        })
+        return count; 
+    },
     cartview:(req,res)=>{
         newItemsArray = []
         if(req.session.name){
@@ -32,6 +43,7 @@ exports.controler = {
                 items: newItemsArray,
                 login: req.session.name ? 'ok' : 'no',
                 isAdmin: req.session.isAdmin === 'true'?'yes':'no',
+                itemsCount:this.controler.getCartItemsCount(req,res)
             })
             // res.send(cartItems);
         }else{
@@ -40,6 +52,7 @@ exports.controler = {
         }
         
     },
+   
     add: (req,res,data) => {
          if(req.session.name){
 
