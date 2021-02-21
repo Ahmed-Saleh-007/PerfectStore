@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <%- include("../partials/header.ejs") %>
-<body>
+<body onload="showdata(<%=JSON.stringify(items)%>)">
     <section class="py-5">
         <div class="container">
             <div class="row">
@@ -13,15 +13,8 @@
                             <h6 class=" m-0 pt-3 text-muted">Item Are Reserved For 60Min</h6>
                         </div>
                     </div>
-                    <div class="row py-5 border-top">
-                        <div class="col-md-4  col-sm-8">
-                            <img src="team1.jpg" class="w-100" alt="">
-                        </div>
-                        <div class="col-md-8 pt-4  col-sm-8">
-                            <h3 class="price">22.5$</h3>
-                            <p class="py-2">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Necessitatibus.</p>
-                            <a href="#" class="btn">Remove</a>
-                        </div>
+                    <div class="row py-5 border-top"  id="data">
+                        
                     </div>
                     
                 </div>
@@ -58,6 +51,33 @@
             </div>    
         </div>
     </section>
+
+    <script>
+        function showdata(items){
+           // console.log(items);
+           // data = JSON.parse(items);
+           let data = ``;
+            items.forEach(element => {
+                data +=`
+                <div class="col-md-4  col-sm-8">
+                            <img src="${element.productImage}" class="w-100" alt="">
+                        </div>
+                        <div class="col-md-8 pt-4  col-sm-8">
+                            <h3 class="price">${element.price}</h3>
+                            <p class="py-2">${element.description}</p>
+                            <a href="#" class="btn">Remove</a>
+                </div>
+                `
+
+            });
+            document.getElementById('data').innerHTML = data;
+        }
+
+        // function showData(){
+
+        // }
+
+    </script>
 </body>
 <%- include("../partials/footer.ejs") %>
    

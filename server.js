@@ -110,7 +110,10 @@ app.use('/users', express.static('./public/upload/usersImges'));
 app.use('/users/user', express.static('./public/upload/usersImges'));
 
 
+app.use('/products/cart/view.html', express.static('./public/upload'));
+
 app.use('/products/productDetails.html', express.static('./public/upload'));
+
 app.use('/assets', express.static(__dirname + '/public/assets'));
 app.use('/upload', express.static(__dirname + '/public'));
 app.get('/', (req, res) => res.render('index', {
