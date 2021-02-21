@@ -357,9 +357,8 @@
   position: relative;
 }
 
-.header-bottom .header-right .shopping-card::before {
+.header-bottom .header-right .shopping-card span {
   position: absolute;
-  content: "02";
   width: 25px;
   height: 25px;
   background: #00b1ff;
@@ -1488,6 +1487,35 @@
 .profile .profile-submit {
   border-radius: 5px;
   padding: 22px 35px;
+}
+
+/*start popup */
+
+.popup{
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 9999;
+  background-color: rgba(178, 178, 178, 0.8);
+  display: none;
+}
+
+.popup .inner{
+  position: relative;
+  margin: 100px auto;
+  height: 70%;
+  width: 75%;
+  background-color: #fff;
+  border: 1px solid #555;
+}
+
+.popup .inner .exit{
+  position: absolute;
+  top: 15px;
+  right: 15px;
+
 }
 
 /*start product page*/
