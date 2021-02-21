@@ -357,9 +357,8 @@
   position: relative;
 }
 
-.header-bottom .header-right .shopping-card::before {
+.header-bottom .header-right .shopping-card span {
   position: absolute;
-  content: "02";
   width: 25px;
   height: 25px;
   background: #00b1ff;
