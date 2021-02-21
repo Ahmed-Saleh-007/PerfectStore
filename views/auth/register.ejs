@@ -32,7 +32,9 @@
             <%if(generalErrorMessage !== ""){%>
             <div class="alert alert-danger" role="alert"><%= generalErrorMessage %></div>
             <%}%>
-                
+            <%if(ismatchErrorMessage !== ""){%>
+            <div class="alert alert-danger" role="alert"><%= ismatchErrorMessage %></div>
+            <%}%>
                 <p class="login-box-msg">Sign in to start your session</p>
                 
                 
@@ -115,7 +117,7 @@
     <script>
         $(".input-group input").each(function () {
             if ($(this).val() != "") {
-            $(this).addClass('filled');
+                $(this).addClass('filled');
             } else {
                 $(this).removeClass('filled');
             }

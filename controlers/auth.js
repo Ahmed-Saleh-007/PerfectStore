@@ -22,7 +22,8 @@ var errors = {
     emailErrorMessage: "",
     passwordErrorMessage: "",
     passwordConfirmationErrorMessage: "",
-    generalErrorMessage: ""
+    generalErrorMessage: "",
+    ismatchErrorMessage:""
 }
 var data = {
     name: "",
@@ -30,6 +31,8 @@ var data = {
     password: "",
     passwordConfirmation: ""
 }
+
+
 exports.controler = {
     register: function (req, res) {
         if (req.session.name) {
@@ -40,75 +43,115 @@ exports.controler = {
             data['email'] = req.body.email;
             data['password'] = req.body.password;
             data['passwordConfirmation'] = req.body.password_confirmation;
-            var validName = validation.controler.username(req.body.name);
-            var validEmail = validation.controler.email(req.body.email);
-            var isAdmin = validation.controler.admin(req.body.email);
-            var validPassword = validation.controler.password(req.body.password);
-            var validPasswordConfirmation = validation.controler.password(req.body.password_confirmation);
-            if (validName && validEmail && validPassword && validPasswordConfirmation) {
-                var userIndex = users.findIndex((item) => item.email == req.body.email);
-                if (userIndex >= 0) {
-                    console.log("This email registered before, please try with another email");
-                    isFoundBefore = true;
-                    errorFlag = true;
-                } else {
-                    if ((req.body.password) != (req.body.password_confirmation)) {
-                        console.log('Password Does not match, please try again');
-                        isMatch = false;
-                        errorFlag = true;
-                    } else {
-
-                        console.log('ok');
-                        console.log('isAdmin -> ' + isAdmin);
-
-                        var newqq = {};
-                        var id;
-                        if (users.length == 0) {
-                            id = 1;
-                        } else {
-                            id = Number(users[users.length - 1].userID) + 1;
-                        }
-
-                        Object.assign(newqq, {
-                            userID: `${id}`
-                        }, req.body, {
-                            isadmin: `${isAdmin}`
-                        }, {
-                            imagename: ""
-                        });
-                        users.push(newqq);
-                        saveUsersArrayToFile();
-
-                        res.send("<script>location.href= '/login.html'</script>")
-
-
-
-
-                    }
-
-                }
+            
+            // var validName = validation.controler.username(req.body.name);
+            // var validEmail = validation.controler.email(req.body.email);
+           
+            // var validPassword = validation.controler.password(req.body.password);
+            // var validPasswordConfirmation = validation.controler.password(req.body.password_confirmation);
+            var id;
+            if (users.length == 0) {
+                id = 1;
             } else {
-                errorFlag = true;
+                id = Number(users[users.length - 1].userID) + 1;
             }
-            if (errorFlag) {
-                console.log('validName ' + validName)
-                console.log('validEmail ' + validEmail)
-                console.log('validPassword ' + validPassword)
-                console.log('validPasswordConfirmation ' + validPasswordConfirmation)
-                console.log('isFoundBefore ' + isFoundBefore)
-                console.log('isMatch ' + isMatch)
-                validName ? errors['userNameErrorMessage'] = "" : errors['userNameErrorMessage'] = '* Name is not valid';
-                validEmail ? errors['emailErrorMessage'] = "" : errors['emailErrorMessage'] = '* Email is not valid';
-                validPassword ? errors['passwordErrorMessage'] = "" : errors['passwordErrorMessage'] = "* Password must be more than 8 digits";
-                validPasswordConfirmation ? errors['passwordConfirmationErrorMessage'] = "" : errors['passwordConfirmationErrorMessage'] = "* Password Confirmation must be more than 8 digits";
-                isFoundBefore ? errors['generalErrorMessage'] = '* This email registered before, please try with another email' : errors['generalErrorMessage'] = "";
-                // isMatch ?  errors['generalErrorMessage'] ="" : errors['generalErrorMessage'] = '* Password Does not match, please try again';
-                errorFlag = false;
+             errors =  validation.controler.checkValid(req.body,id);
+             console.log(validation.controler.isError())
+             if(!validation.controler.isError()){
+                var isAdmin = validation.controler.admin(req.body.email);
+                console.log('ok');
+                console.log('isAdmin -> ' + isAdmin);
+
+                var newqq = {};
+               
+
+                Object.assign(newqq, {
+                    userID: `${id}`
+                }, req.body, {
+                    isadmin: `${isAdmin}`
+                }, {
+                    imagename: ""
+                });
+                users.push(newqq);
+                saveUsersArrayToFile();
+
+                res.send("<script>location.href= '/login.html'</script>")
+             }else{
                 res.render("auth/register.ejs", {
                     ...errors,
                     ...data
                 })
-            }
+             }
+
+            // if (validName && validEmail && validPassword && validPasswordConfirmation) {
+            // var userIndex = users.findIndex((item) => item.email == req.body.email);
+            
+            //     var isAdmin = validation.controler.isExist(req.body.email)
+            //     if (isAdmin) {
+            //         console.log("This email registered before, please try with another email");
+            //         isFoundBefore = true;
+            //         errorFlag = true;
+            //     } else {
+            //         if ((req.body.password) != (req.body.password_confirmation)) {
+            //             console.log('Password Does not match, please try again');
+            //             isMatch = false;
+            //             errorFlag = true;
+            //         } else {
+
+            //             console.log('ok');
+            //             console.log('isAdmin -> ' + isAdmin);
+
+            //             var newqq = {};
+            //             var id;
+            //             if (users.length == 0) {
+            //                 id = 1;
+            //             } else {
+            //                 id = Number(users[users.length - 1].userID) + 1;
+            //             }
+
+            //             Object.assign(newqq, {
+            //                 userID: `${id}`
+            //             }, req.body, {
+            //                 isadmin: `${isAdmin}`
+            //             }, {
+            //                 imagename: ""
+            //             });
+            //             users.push(newqq);
+            //             saveUsersArrayToFile();
+
+            //             res.send("<script>location.href= '/login.html'</script>")
+
+
+
+
+            //         }
+
+            //     }
+            // } else {
+            //     errorFlag = true;
+            // }
+            // if (errorFlag) {
+            //     console.log('validName ' + validName)
+            //     console.log('validEmail ' + validEmail)
+            //     console.log('validPassword ' + validPassword)
+            //     console.log('validPasswordConfirmation ' + validPasswordConfirmation)
+            //     console.log('isFoundBefore ' + isFoundBefore)
+            //     console.log('isMatch ' + isMatch)
+               
+            //     console.log('isFoundBefore ' + isFoundBefore)
+            //     console.log('isMatch ' + isMatch)
+            //     validName ? errors['userNameErrorMessage'] = "" : errors['userNameErrorMessage'] = '* Name is not valid';
+            //     validEmail ? errors['emailErrorMessage'] = "" : errors['emailErrorMessage'] = '* Email is not valid';
+            //     validPassword ? errors['passwordErrorMessage'] = "" : errors['passwordErrorMessage'] = "* Password must be more than 8 digits";
+            //     validPasswordConfirmation ? errors['passwordConfirmationErrorMessage'] = "" : errors['passwordConfirmationErrorMessage'] = "* Password Confirmation must be more than 8 digits";
+            //     isFoundBefore ? errors['generalErrorMessage'] = '* This email registered before, please try with another email' : errors['generalErrorMessage'] = "";
+            //      isMatch ?  errors['ismatchErrorMessage'] ="" : errors['ismatchErrorMessage'] = '* Password Does not match, please try again';
+            //     errorFlag = false;
+            //     res.render("auth/register.ejs", {
+            //         ...errors,
+            //         ...data
+            //     })
+            // }
 
         }
 

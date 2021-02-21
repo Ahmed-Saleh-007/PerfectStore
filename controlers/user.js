@@ -1,9 +1,24 @@
 var fs = require("fs");
 const multer = require('multer');
 const path = require('path');
+var validation = require("./validation");
 var config = require("../controlers/config");
 var helpFunction = require("../controlers/help");
 var log = require("../controlers/log")
+
+var errors = {
+    userNameErrorMessage: "",
+    emailErrorMessage: "",
+    passwordErrorMessage: "",
+    generalErrorMessage: "",
+    ismatchErrorMessage: ""
+}
+var data = {
+    name: "",
+    email: "",
+    password: "",
+    passwordConfirmation: ""
+}
 
 var users = [];
 if (fs.existsSync("db/users.json")) {
@@ -50,9 +65,11 @@ exports.controler = {
                     userName: users[userIndex].name,
                     userEmail: users[userIndex].email,
                     pass: users[userIndex].password,
+                    con_pass:users[userIndex].password_confirmation,
                     userID: users[userIndex].userID,
                     userImage: users[userIndex].imagename,
-                    flag: false
+                    flag: false,
+                    ...errors
                 })
             } else {
                 res.send({
@@ -82,9 +99,11 @@ exports.controler = {
                     userName: users[userIndex].name,
                     userEmail: users[userIndex].email,
                     pass: users[userIndex].password,
+                    con_pass:users[userIndex].password_confirmation,
                     userID: users[userIndex].userID,
                     userImage: users[userIndex].imagename,
-                    flag: false
+                    flag: false,
+                    ...errors
                 })
             } else {
                 res.send({
@@ -142,6 +161,7 @@ exports.controler = {
                         userName: `${users[userIndex].name}`,
                         userEmail: users[userIndex].email,
                         pass: users[userIndex].password,
+                        con_pass:users[userIndex].password_confirmation,
                         userID: users[userIndex].userID,
                         userImage: users[userIndex].imagename,
                         err: true,
@@ -158,34 +178,65 @@ exports.controler = {
                     var imgName;
                     console.log("req.body -> ")
                     console.log(req.body)
-                    if (req.file == undefined) {
-                        imgName = users[userIndex].imagename;
-                        users[userIndex].name = req.body.name;
-                        users[userIndex].email = req.body.email;
-                        users[userIndex].imagename = imgName;
-                    } else {
-                        if(users[userIndex].imagename !== ""){
-                            try {
-                                fs.unlinkSync(`public/upload/usersImges/${users[userIndex].imagename}`);
-    
-                            } catch (e) {
-                                res.status(400).send({
-                                    message: "Error deleting image!",
-                                    error: e.toString(),
-                                    req: req.body
-                                });
+                    errors =  validation.controler.checkValid(req.body,req.params.id);
+                    console.log(validation.controler.isError())
+                    if(!validation.controler.isError()){
+                        if (req.file == undefined) {
+                            imgName = users[userIndex].imagename;
+                            users[userIndex].name = req.body.name;
+                            users[userIndex].email = req.body.email;
+                            users[userIndex].password = req.body.password;
+                            users[userIndex].password_confirmation = req.body.password_confirmation;
+                            users[userIndex].imagename = imgName;
+                        } else {
+                            if(users[userIndex].imagename !== ""){
+                                try {
+                                    fs.unlinkSync(`public/upload/usersImges/${users[userIndex].imagename}`);
+        
+                                } catch (e) {
+                                    res.status(400).send({
+                                        message: "Error deleting image!",
+                                        error: e.toString(),
+                                        req: req.body
+                                    });
+                                }
+                            }else{
+
                             }
+                           
+                            imgName = `${req.file.filename}`
+                            users[userIndex].name = req.body.name;
+                            users[userIndex].email = req.body.email;
+                            users[userIndex].password = req.body.password;
+                            users[userIndex].password_confirmation = req.body.password_confirmation;
+                            users[userIndex].imagename = imgName;
+    
                         }
-                       
-                        imgName = `${req.file.filename}`
-                        users[userIndex].name = req.body.name;
-                        users[userIndex].email = req.body.email;
-                        users[userIndex].imagename = imgName;
+                        saveUsersArrayToFile();
+                        res.send("<script> location.href = '/users/user/viewedit.html'</script>")
+    
+                    }else{
 
+                        // if(!(validation.controler.isChanged(req.params.id,req.body.email))){
+                        //     errors['isExistErrorMessage'] = false
+                        // }
+                        console.log(errors);
+                        res.render('../views/users/profile.ejs', {
+                            msg: "",
+                            login: req.session.name ? 'ok' : 'no',
+                            isAdmin: req.session.isAdmin === 'true'?'yes':'no',
+                            userName: `${users[userIndex].name}`,
+                            userEmail: users[userIndex].email,
+                            pass: users[userIndex].password,
+                            con_pass:users[userIndex].password_confirmation,
+                            userID: users[userIndex].userID,
+                            userImage: users[userIndex].imagename,
+                            err: -1,
+                            flag:false,
+                            ...errors
+                        });
                     }
-                    saveUsersArrayToFile();
-                    res.send("<script> location.href = '/users/user/viewedit.html'</script>")
-
+                    
 
                 }
 

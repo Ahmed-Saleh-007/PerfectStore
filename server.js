@@ -145,7 +145,7 @@ app.delete("/products/delete.html/:id", bodyParser, products.controler.delete)
 app.get("/products/cart/view.html", bodyParser, cart.controler.cartview)
 app.post("/products/cart/add.html", bodyParser, cart.controler.add)
 // app.get("/products/cart/add.html/:data", bodyParser, cart.controler.add)
-app.delete("/products/cart/delete.html/:id", bodyParser, cart.controler.delete)
+app.get("/products/cart/delete.html/:id", bodyParser, cart.controler.delete)
 
 app.get("/home.html/logout", home.controler.logout);
 app.get("/home.html", home.controler.homeView);

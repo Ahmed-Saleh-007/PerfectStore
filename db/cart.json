@@ -1,28 +1,14 @@
 [{
-    "productID": "1",
-    "name": "NEw product",
-    "category": "man",
-    "price": "20",
-    "quantity": "2",
-    "description": "A New Styled Watch",
-    "productImage": "1-NEw product-1613842789304-2 (2).jpg"
-}, {
-    "productID": "3",
-    "name": "Mohammed Egila",
+    "userID": "1",
+    "productID": "6",
+    "name": "u",
     "category": "man",
     "price": "120",
     "quantity": "12",
     "description": "abcd",
-    "productImage": "3-Mohammed Egila-1613866074075-product1.png"
+    "productImage": "6-u-1613916509234-category_9.png"
 }, {
-    "productID": "2",
-    "name": "dddd",
-    "category": "man",
-    "price": "100",
-    "quantity": "5",
-    "description": "A New Styled Watch",
-    "productImage": "2-dddd-1613842872174-1 (2).jpg"
-}, {
+    "userID": "1",
     "productID": "5",
     "name": "aaaa",
     "category": "women",
@@ -31,6 +17,7 @@
     "description": "abcd",
     "productImage": "5-aaaa-1613866267782-category_4.png"
 }, {
+    "userID": "1",
     "productID": "5",
     "name": "aaaa",
     "category": "women",
@@ -39,22 +26,7 @@
     "description": "abcd",
     "productImage": "5-aaaa-1613866267782-category_4.png"
 }, {
-    "productID": "4",
-    "name": "Mohammed Egila",
-    "category": "man",
-    "price": "120",
-    "quantity": "12",
-    "description": "abcd",
-    "productImage": "4-Mohammed Egila-1613866113863-category_10.png"
-}, {
-    "productID": "1",
-    "name": "NEw product",
-    "category": "man",
-    "price": "20",
-    "quantity": "2",
-    "description": "A New Styled Watch",
-    "productImage": "1-NEw product-1613842789304-2 (2).jpg"
-}, {
+    "userID": "2",
     "productID": "5",
     "name": "aaaa",
     "category": "women",
@@ -63,11 +35,21 @@
     "description": "abcd",
     "productImage": "5-aaaa-1613866267782-category_4.png"
 }, {
-    "productID": "2",
-    "name": "dddd",
-    "category": "man",
-    "price": "100",
-    "quantity": "5",
-    "description": "A New Styled Watch",
-    "productImage": "2-dddd-1613842872174-1 (2).jpg"
+    "userID": "3",
+    "productID": "5",
+    "name": "aaaa",
+    "category": "women",
+    "price": "120",
+    "quantity": "12",
+    "description": "abcd",
+    "productImage": "5-aaaa-1613866267782-category_4.png"
+}, {
+    "userID": "2",
+    "productID": "5",
+    "name": "aaaa",
+    "category": "women",
+    "price": "120",
+    "quantity": "12",
+    "description": "abcd",
+    "productImage": "5-aaaa-1613866267782-category_4.png"
 }]

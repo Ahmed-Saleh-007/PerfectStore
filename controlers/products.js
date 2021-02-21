@@ -273,7 +273,7 @@ exports.controler = {
     addtocart:(req, res) => {
         if(req.session.name){
             var productIndex = productArray.findIndex((item) => item.productID == req.params.id);
-            cart.controler.add(productArray[productIndex]);
+            cart.controler.add(req, res,productArray[productIndex]);
         }else{
 
             res.send('<script> location.href = "/login.html" </script>');
