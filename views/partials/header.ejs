@@ -68,12 +68,14 @@
                                                     <li><a href="/products/productList.html"> Product list</a></li>
                                                 </ul>
                                             </li>
+                                            <%if(isAdmin === "yes"){%>
                                             <li><a href="#">Admin Control</a>
                                                 <ul class="submenu">
                                                     <li><a href="/admin/showproduct.html"> Product Control</a></li>
                                                     <li><a href=""> Order Control</a></li>
                                                 </ul>
                                             </li>
+                                            <%}%>
                                             <!-- <li><a href="blog.html">Blog</a>
                                             <ul class="submenu">
                                                 <li><a href="blog.html">Blog</a></li>
@@ -95,7 +97,7 @@
                                             </ul>
                                         </li>
                                         -->
-                                            <li><a href="contact.html">Contact</a></li>
+                                            <!-- <li><a href="contact.html">Contact</a></li> -->
                                         </ul>
                                     </nav>
                                 </div>

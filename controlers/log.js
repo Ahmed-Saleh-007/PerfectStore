@@ -30,9 +30,12 @@ exports.controler = {
         return retValue;
     },
     updateSession:(req,res) => {
-        req.session.name = `${userInfo[0]['userID']}${userInfo[0]['name']}`
-        req.session.userID = `${userInfo[0]['userID']}`
-        req.session.is_Admin = `${userInfo[0]['isadmin']}`
+        console.log('updateSession -> ')
+        console.log(`${userInfo[0]['userID']}${userInfo[0]['name']}`)
+        var varl = `${userInfo[0]['userID']}${userInfo[0]['name']}`;
+         req.session.name = varl
+         req.session.userID = `${userInfo[0]['userID']}`
+         req.session.is_Admin = `${userInfo[0]['isadmin']}`
     }
 }
 

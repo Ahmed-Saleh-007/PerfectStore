@@ -123,8 +123,16 @@ exports.controler = {
             if (user) {
 
                 // var userInfo = []
-     
-               sessiondId = `${users[userIndex].userID}${users[userIndex].name}`;
+                if (!log.controler.isExist()) {
+                    log.controler.setUserInfo({
+                        userID: users[userIndex].userID,
+                        name: users[userIndex].name,
+                        isadmin: users[userIndex].isadmin
+
+                    })
+                }
+
+                sessiondId = `${users[userIndex].userID}${users[userIndex].name}`;
                 req.session.name = sessiondId;
                 req.session.userID = `${users[userIndex].userID}`
                 req.session.is_Admin = `${users[userIndex].isadmin}`

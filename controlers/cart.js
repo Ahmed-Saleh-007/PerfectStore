@@ -12,7 +12,8 @@ exports.controler = {
                 msg: '',
                 err: -1,
                 items: cartItems,
-                login: req.session.name ? 'ok' : 'no'
+                login: req.session.name ? 'ok' : 'no',
+                isAdmin: req.session.isAdmin === 'true'?'yes':'no',
             })
             // res.send(cartItems);
         }else{

@@ -3,6 +3,7 @@ const multer = require('multer');
 const path = require('path');
 var config = require("../controlers/config");
 var helpFunction = require("../controlers/help");
+var log = require("../controlers/log")
 
 var users = [];
 if (fs.existsSync("db/users.json")) {
@@ -45,6 +46,7 @@ exports.controler = {
                     msg: '',
                     err: -1,
                     login: req.session.name ? 'ok' : 'no',
+                    isAdmin: req.session.isAdmin === 'true'?'yes':'no',
                     userName: users[userIndex].name,
                     userEmail: users[userIndex].email,
                     pass: users[userIndex].password,
@@ -68,20 +70,21 @@ exports.controler = {
         if (req.session.name) {
             let user = req.session.userID;
             var userIndex = users.findIndex((item) => item.userID == user);
+            log.controler.updateSession(req,res);
             console.log(users[userIndex])
             if (user) {
-                // req.session.destroy();
-                res.render('../views/users/profile.ejs', {
-                    msg: 'Data updated please sign in again with new data',
+                res.render('../views/users/profile.ejs',{
+                    msg: 'Data updated',
                     err: false,
                      login: req.session.name ? 'ok' : 'no',
-                    // login:'no',
+                     isAdmin: req.session.isAdmin === 'true'?'yes':'no',
+
                     userName: users[userIndex].name,
                     userEmail: users[userIndex].email,
                     pass: users[userIndex].password,
                     userID: users[userIndex].userID,
                     userImage: users[userIndex].imagename,
-                    flag: true
+                    flag: false
                 })
             } else {
                 res.send({
@@ -135,6 +138,7 @@ exports.controler = {
                     res.render('../views/users/profile.ejs', {
                         msg: `Error: ${error.message}`,
                         login: req.session.name ? 'ok' : 'no',
+                        isAdmin: req.session.isAdmin === 'true'?'yes':'no',
                         userName: `${users[userIndex].name}`,
                         userEmail: users[userIndex].email,
                         pass: users[userIndex].password,
@@ -160,42 +164,26 @@ exports.controler = {
                         users[userIndex].email = req.body.email;
                         users[userIndex].imagename = imgName;
                     } else {
-                        try {
-                            fs.unlinkSync(`public/upload/usersImges/${users[userIndex].imagename}`);
-
-                        } catch (e) {
-                            res.status(400).send({
-                                message: "Error deleting image!",
-                                error: e.toString(),
-                                req: req.body
-                            });
+                        if(users[userIndex].imagename !== ""){
+                            try {
+                                fs.unlinkSync(`public/upload/usersImges/${users[userIndex].imagename}`);
+    
+                            } catch (e) {
+                                res.status(400).send({
+                                    message: "Error deleting image!",
+                                    error: e.toString(),
+                                    req: req.body
+                                });
+                            }
                         }
+                       
                         imgName = `${req.file.filename}`
                         users[userIndex].name = req.body.name;
                         users[userIndex].email = req.body.email;
                         users[userIndex].imagename = imgName;
 
-
-
-
-
-
-
-
                     }
                     saveUsersArrayToFile();
-                    // res.render('../views/users/profile.ejs', {
-                    //     msg: 'File Uploaded',
-                    //     login: req.session.name ? 'ok' : 'no',
-                    //     err: 0,
-                    //     items: users,
-                    //     userName: `${users[userIndex].name}`,
-                    //     userEmail: users[userIndex].email,
-                    //     pass: users[userIndex].password,
-                    //     userID: users[userIndex].userID,
-                    //     userImage: users[userIndex].imagename
-                    // });
-
                     res.send("<script> location.href = '/users/user/viewedit.html'</script>")
 
 

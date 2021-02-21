@@ -5,7 +5,8 @@ exports.controler = {
         res.render("../views/adminProductControl.ejs",{
             err:-1,
             login: req.session.name?'ok':'no',
-            items:[]
+            items:[],
+            isAdmin: req.session.isAdmin === 'true'?'yes':'no',
         })
     }else{
         res.send('<script> location.href = "/home.html" </script>');
@@ -17,7 +18,8 @@ exports.controler = {
             res.render("../views/adminProductControl.ejs",{
                 err:-1,
                 login: req.session.name?'ok':'no',
-                items:[]
+                items:[],
+                isAdmin: req.session.isAdmin === 'true'?'yes':'no',
             })
         }else{
             res.send('<script> location.href = "/home.html" </script>');

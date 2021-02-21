@@ -12,7 +12,8 @@ exports.controler = {
 
             msg: '',
             err: -1,
-            login: req.session.name ? 'ok' : 'no'
+            login: req.session.name ? 'ok' : 'no',
+            isAdmin: req.session.isAdmin === 'true'?'yes':'no',
         })
 
     },
@@ -22,7 +23,8 @@ exports.controler = {
 
             msg: '',
             err: -1,
-            login: req.session.name ? 'ok' : 'no'
+            login: req.session.name ? 'ok' : 'no',
+            isAdmin: req.session.isAdmin === 'true'?'yes':'no',
         })
 
     }

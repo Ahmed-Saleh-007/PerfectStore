@@ -51,11 +51,12 @@
                                 <%=item.description%>
                             </p>
                             <div class="mt-4">
-                                <div class="btn btn-primary mr-3" id="addBTN"
-                                    onclick='saveProduct(<%-JSON.stringify(item.productID)%>)'>
+                                <a class="btn btn-primary mr-3" id="addBTN"
+                                   
+                                    href= "/products/addtocart.html/ <%=item.productID%>">
                                     <i class="fas fa-cart-plus fa-lg mr-2"></i>
                                     Add to Cart
-                                </div>
+                                </a>
                             </div>
                         </div>
                     </div>
@@ -76,12 +77,14 @@
     let arr = [];
 
     function saveProduct(arrr) {
-        fetch(`/products/addtocart.html/${arrr}`)
-            .then(returnJsonData => returnJsonData.json())
-            .then(data => {
+        fetch(`/products/addtocart.html/${arrr}`,(req,res) =>{
 
-                    console.log(data)
-            })
+        })
+            // .then(returnJsonData => returnJsonData.json())
+            // .then(data => {
+
+            //         console.log(data)
+            // })
                     //     var existingEntries = JSON.parse(localStorage.getItem("products"));
                     //     arr.push(existingEntries);
                     //     arr.push(arrr);

@@ -120,7 +120,9 @@ app.use('/upload', express.static(__dirname + '/public'));
 app.get('/', (req, res) => res.render('index', {
     msg: '',
     err: -1,
-    login: req.session.name?'ok':'no'
+    login: req.session.name?'ok':'no',
+    // isAdmin:"no"
+     isAdmin: req.session.isAdmin === 'true'?'yes':'no'
 }));
 
 app.use('/products', express.static("./public/upload"));

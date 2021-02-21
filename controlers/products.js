@@ -64,6 +64,7 @@ exports.controler = {
             res.render('adminProductControl', {
                 msg: 'File Uploaded',
                 login: req.session.name ? 'ok' : 'no',
+                isAdmin: req.session.isAdmin === 'true'?'yes':'no',
                 err: 0,
                 items:productArray
                 
@@ -78,7 +79,8 @@ exports.controler = {
             res.render("products/cart.ejs", {
                 msg: '',
                 err: -1,
-                login: req.session.name ? 'ok' : 'no'
+                login: req.session.name ? 'ok' : 'no',
+                isAdmin: req.session.isAdmin === 'true'?'yes':'no'
             })
         }else{
             res.send('<script> location.href = "/home.html" </script>');
@@ -91,6 +93,7 @@ exports.controler = {
         res.render("products/productList.ejs", {
             msg: '',
             err: -1,
+            isAdmin: req.session.isAdmin === 'true'?'yes':'no',
             login: req.session.name ? 'ok' : 'no'
         })
     },
@@ -158,6 +161,7 @@ exports.controler = {
                     res.render('adminProductControl', {
                         msg: `Error: ${error.message}`,
                         login: req.session.name ? 'ok' : 'no',
+                        isAdmin: req.session.isAdmin === 'true'?'yes':'no',
                         items:[],
                         err: true
                     });
@@ -166,6 +170,7 @@ exports.controler = {
                         res.render('adminProductControl', {
                             msg: 'Error: No File Selected',
                             login: req.session.name ? 'ok' : 'no',
+                            isAdmin: req.session.isAdmin === 'true'?'yes':'no',
                             items:[],
                             err: 1
                         });
@@ -214,6 +219,7 @@ exports.controler = {
                         res.render('adminProductControl', {
                             msg: 'File Uploaded',
                             login: req.session.name ? 'ok' : 'no',
+                            isAdmin: req.session.isAdmin === 'true'?'yes':'no',
                             err: 0,
                             items:productArray,
                             file: `upload/${req.file.originalname}`
@@ -260,6 +266,7 @@ exports.controler = {
         res.render("products/product.ejs", {
             item: productArray[productIndex],
             login: req.session.name ? 'ok' : 'no',
+            isAdmin: req.session.isAdmin === 'true'?'yes':'no',
             errormessage: ""
         })
     },
@@ -268,7 +275,9 @@ exports.controler = {
             var productIndex = productArray.findIndex((item) => item.productID == req.params.id);
             cart.controler.add(productArray[productIndex]);
         }else{
-            res.send('<script> location.href = "/home.html" </script>');
+
+            res.send('<script> location.href = "/login.html" </script>');
+            
         }
        
     }
